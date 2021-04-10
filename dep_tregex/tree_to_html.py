@@ -136,6 +136,7 @@ _PARENT_HOVER_STYLES = [
 ## -----------------------------------------------------------------------------
 #                                 Utilities
 
+
 def _label(tree, node, fields):
     """
     Compose a label for i'th word of a tree, according to 'fields'.
@@ -163,12 +164,14 @@ def _label(tree, node, fields):
 
     return cgi.escape(label)
 
+
 def _label_height(text):
     """
     Return label text height.
     First line is in big font, other lines are in small font.
     """
     return _BIG_FONT + _SMALL_LINE * text.count(u'\n')
+
 
 def _label_width(text):
     """
@@ -185,17 +188,20 @@ def _label_width(text):
 #    ~ Arcs are composed of two circular segments and a straight line. ~
 #               Segments touch the word at a specific angle.
 
+
 def _arc_radius(height_in_units):
     """
     Return radius of a circular segment of an arc of a given height level.
     """
     return height_in_units * _ARC_HEIGHT_UNIT / (1 - math.cos(_ANGLE))
 
+
 def _arc_min_length(height_in_units):
     """
     Return minimal horizontal size for an arc of a given "flight level".
     """
     return 2 * _arc_radius(height_in_units) * math.sin(_ANGLE)
+
 
 def _parent_arc_start_offset(tree, node):
     head = tree.heads(node)
@@ -218,6 +224,7 @@ def _parent_arc_start_offset(tree, node):
             return +_PORT_OFFSET
         else:
             return -_PORT_OFFSET
+
 
 def _draw_label(file, text, x, y, css_class):
     """
@@ -245,6 +252,7 @@ def _draw_label(file, text, x, y, css_class):
     # End a group.
     file.write(u'      </g>\n')
 
+
 def _draw_root_arc(file, x, y, height_in_units, deprel, css_class):
     """
     Draw a vertical "arc from the root" to the node at (x, y).
@@ -270,6 +278,7 @@ def _draw_root_arc(file, x, y, height_in_units, deprel, css_class):
 
     # End.
     file.write(u'      </g>\n')
+
 
 def _draw_arc(file, start_x, end_x, y, height_in_units, deprel, css_class):
     """
@@ -310,6 +319,7 @@ def _draw_arc(file, start_x, end_x, y, height_in_units, deprel, css_class):
     # End.
     file.write(u'      </g>\n')
 
+
 def _draw_arrow(file, tip_x, tip_y, angle):
     """
     Draw an arrow with a tip at (tip_x, tip_y), "attacking" the surface at a
@@ -340,8 +350,10 @@ def _draw_arrow(file, tip_x, tip_y, angle):
 ## -----------------------------------------------------------------------------
 #                                   Main
 
+
 def write_prologue_html(file):
     file.write(_PROLOGUE_HTML)
+
 
 _UID = 0
 
@@ -480,6 +492,7 @@ def write_tree_html(file, tree, fields=[], highlight_nodes=[], static=False):
 
     # Done.
     file.write(u'    </svg>\n')
+
 
 def write_epilogue_html(file):
     file.write(_EPILOGUE_HTML)
