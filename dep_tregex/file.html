@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <style type="text/css">
+        svg { display: block; }
+    </style>
+        <style type="text/css">
+      /* Generic */
+      * { stroke: none; fill: none; transition: 0.1s ease-out, stroke-dasharray 0.02s; }
+      text { font-family: sans-serif; text-anchor: middle; cursor: default; }
+      .hid { opacity: 0.0; }
+      rect.hid { fill: #000; stroke: #000; stroke-width: 10.00px; }
+      path.hid { fill: none; stroke: #000; stroke-width: 10.00px; }
+
+      /* Labels & arcs */
+      .big { font-size: 12px; fill: #000; font-weight: bold; }
+      .small { font-size: 10px; fill: #444; }
+      .user-hl > .big   { fill: #08c; }
+      .user-hl > .small { fill: #048; }
+      .role { font-size: 10px; fill: #444; font-style: italic; }
+      .arc { stroke: black; stroke-width: 0.50px; }
+      .arrow { fill: #000; }
+
+      /* Label and arc highlight on hover */
+      g:hover > text.big { fill: #f00; }
+      g:hover > text.small { fill: #900; }
+      g:hover > text.role { fill: #f00; }
+      g:hover > path.arc { stroke: #f00; }
+      g:hover > path.arrow { fill: #f00; }
+
+      /* Arc highlight on label hover */
+      g:hover + g > text.role { fill: #f00; }
+      g:hover + g > path.arc { stroke: #f00; stroke-dasharray: 5,5; }
+      g:hover + g > path.arrow { fill: #f00; }
+    </style>
+  </head>
+  <body>
+    <svg width="989" height="150" class="svg0">
+      <style type="text/css">
+        .svg0 .w3:hover ~ .w1 > text.big { fill: #c00; }
+        .svg0 .w3 ~ .w1_clicked > text.big { fill: #c00; }
+        .svg0 .w3:hover ~ .w1 > text.small { fill: #800; }
+        .svg0 .w3 ~ .w1_clicked > text.small { fill: #800; }
+        .svg0 .w3:hover ~ .a1 > text.role { fill: #c00; }
+        .svg0 .w3 ~ .a1_clicked > text.role { fill: #c00; }
+        .svg0 .w3:hover ~ .a1 > path.arc { stroke: #c00; }
+        .svg0 .w3 ~ .a1_clicked > path.arc { stroke: #c00; }
+        .svg0 .w3:hover ~ .a1 > path.arrow { fill: #c00; }
+        .svg0 .w3 ~ .a1_clicked > path.arrow { fill: #c00; }
+        .svg0 .w12:hover ~ .w1 > text.big { fill: #888; }
+        .svg0 .w12 ~ .w1_clicked > text.big { fill: #c00; }
+        .svg0 .w12:hover ~ .w1 > text.small { fill: #666; }
+        .svg0 .w12 ~ .w1_clicked > text.small { fill: #800; }
+        .svg0 .w12:hover ~ .a1 > text.role { fill: #888; }
+        .svg0 .w12 ~ .a1_clicked > text.role { fill: #c00; }
+        .svg0 .w12:hover ~ .a1 > path.arc { stroke: #888; }
+        .svg0 .w12 ~ .a1_clicked > path.arc { stroke: #c00; }
+        .svg0 .w12:hover ~ .a1 > path.arrow { fill: #888; }
+        .svg0 .w12 ~ .a1_clicked > path.arrow { fill: #c00; }
+        .svg0 .w3:hover ~ .w2 > text.big { fill: #c00; }
+        .svg0 .w3 ~ .w2_clicked > text.big { fill: #c00; }
+        .svg0 .w3:hover ~ .w2 > text.small { fill: #800; }
+        .svg0 .w3 ~ .w2_clicked > text.small { fill: #800; }
+        .svg0 .w3:hover ~ .a2 > text.role { fill: #c00; }
+        .svg0 .w3 ~ .a2_clicked > text.role { fill: #c00; }
+        .svg0 .w3:hover ~ .a2 > path.arc { stroke: #c00; }
+        .svg0 .w3 ~ .a2_clicked > path.arc { stroke: #c00; }
+        .svg0 .w3:hover ~ .a2 > path.arrow { fill: #c00; }
+        .svg0 .w3 ~ .a2_clicked > path.arrow { fill: #c00; }
+        .svg0 .w12:hover ~ .w2 > text.big { fill: #888; }
+        .svg0 .w12 ~ .w2_clicked > text.big { fill: #c00; }
+        .svg0 .w12:hover ~ .w2 > text.small { fill: #666; }
+        .svg0 .w12 ~ .w2_clicked > text.small { fill: #800; }
+        .svg0 .w12:hover ~ .a2 > text.role { fill: #888; }
+        .svg0 .w12 ~ .a2_clicked > text.role { fill: #c00; }
+        .svg0 .w12:hover ~ .a2 > path.arc { stroke: #888; }
+        .svg0 .w12 ~ .a2_clicked > path.arc { stroke: #c00; }
+        .svg0 .w12:hover ~ .a2 > path.arrow { fill: #888; }
+        .svg0 .w12 ~ .a2_clicked > path.arrow { fill: #c00; }
+        .svg0 .w12:hover ~ .w3 > text.big { fill: #c00; }
+        .svg0 .w12 ~ .w3_clicked > text.big { fill: #c00; }
+        .svg0 .w12:hover ~ .w3 > text.small { fill: #800; }
+        .svg0 .w12 ~ .w3_clicked > text.small { fill: #800; }
+        .svg0 .w12:hover ~ .a3 > text.role { fill: #c00; }
+        .svg0 .w12 ~ .a3_clicked > text.role { fill: #c00; }
+        .svg0 .w12:hover ~ .a3 > path.arc { stroke: #c00; }
+        .svg0 .w12 ~ .a3_clicked > path.arc { stroke: #c00; }
+        .svg0 .w12:hover ~ .a3 > path.arrow { fill: #c00; }
+        .svg0 .w12 ~ .a3_clicked > path.arrow { fill: #c00; }
+        .svg0 .w5:hover ~ .w4 > text.big { fill: #c00; }
+        .svg0 .w5 ~ .w4_clicked > text.big { fill: #c00; }
+        .svg0 .w5:hover ~ .w4 > text.small { fill: #800; }
+        .svg0 .w5 ~ .w4_clicked > text.small { fill: #800; }
+        .svg0 .w5:hover ~ .a4 > text.role { fill: #c00; }
+        .svg0 .w5 ~ .a4_clicked > text.role { fill: #c00; }
+        .svg0 .w5:hover ~ .a4 > path.arc { stroke: #c00; }
+        .svg0 .w5 ~ .a4_clicked > path.arc { stroke: #c00; }
+        .svg0 .w5:hover ~ .a4 > path.arrow { fill: #c00; }
+        .svg0 .w5 ~ .a4_clicked > path.arrow { fill: #c00; }
+        .svg0 .w3:hover ~ .w4 > text.big { fill: #888; }
+        .svg0 .w3 ~ .w4_clicked > text.big { fill: #c00; }
+        .svg0 .w3:hover ~ .w4 > text.small { fill: #666; }
+        .svg0 .w3 ~ .w4_clicked > text.small { fill: #800; }
+        .svg0 .w3:hover ~ .a4 > text.role { fill: #888; }
+        .svg0 .w3 ~ .a4_clicked > text.role { fill: #c00; }
+        .svg0 .w3:hover ~ .a4 > path.arc { stroke: #888; }
+        .svg0 .w3 ~ .a4_clicked > path.arc { stroke: #c00; }
+        .svg0 .w3:hover ~ .a4 > path.arrow { fill: #888; }
+        .svg0 .w3 ~ .a4_clicked > path.arrow { fill: #c00; }
+        .svg0 .w12:hover ~ .w4 > text.big { fill: #888; }
+        .svg0 .w12 ~ .w4_clicked > text.big { fill: #c00; }
+        .svg0 .w12:hover ~ .w4 > text.small { fill: #666; }
+        .svg0 .w12 ~ .w4_clicked > text.small { fill: #800; }
+        .svg0 .w12:hover ~ .a4 > text.role { fill: #888; }
+        .svg0 .w12 ~ .a4_clicked > text.role { fill: #c00; }
+        .svg0 .w12:hover ~ .a4 > path.arc { stroke: #888; }
+        .svg0 .w12 ~ .a4_clicked > path.arc { stroke: #c00; }
+        .svg0 .w12:hover ~ .a4 > path.arrow { fill: #888; }
+        .svg0 .w12 ~ .a4_clicked > path.arrow { fill: #c00; }
+        .svg0 .w3:hover ~ .w5 > text.big { fill: #c00; }
+        .svg0 .w3 ~ .w5_clicked > text.big { fill: #c00; }
+        .svg0 .w3:hover ~ .w5 > text.small { fill: #800; }
+        .svg0 .w3 ~ .w5_clicked > text.small { fill: #800; }
+        .svg0 .w3:hover ~ .a5 > text.role { fill: #c00; }
+        .svg0 .w3 ~ .a5_clicked > text.role { fill: #c00; }
+        .svg0 .w3:hover ~ .a5 > path.arc { stroke: #c00; }
+        .svg0 .w3 ~ .a5_clicked > path.arc { stroke: #c00; }
+        .svg0 .w3:hover ~ .a5 > path.arrow { fill: #c00; }
+        .svg0 .w3 ~ .a5_clicked > path.arrow { fill: #c00; }
+        .svg0 .w12:hover ~ .w5 > text.big { fill: #888; }
+        .svg0 .w12 ~ .w5_clicked > text.big { fill: #c00; }
+        .svg0 .w12:hover ~ .w5 > text.small { fill: #666; }
+        .svg0 .w12 ~ .w5_clicked > text.small { fill: #800; }
+        .svg0 .w12:hover ~ .a5 > text.role { fill: #888; }
+        .svg0 .w12 ~ .a5_clicked > text.role { fill: #c00; }
+        .svg0 .w12:hover ~ .a5 > path.arc { stroke: #888; }
+        .svg0 .w12 ~ .a5_clicked > path.arc { stroke: #c00; }
+        .svg0 .w12:hover ~ .a5 > path.arrow { fill: #888; }
+        .svg0 .w12 ~ .a5_clicked > path.arrow { fill: #c00; }
+        .svg0 .w7:hover ~ .w6 > text.big { fill: #c00; }
+        .svg0 .w7 ~ .w6_clicked > text.big { fill: #c00; }
+        .svg0 .w7:hover ~ .w6 > text.small { fill: #800; }
+        .svg0 .w7 ~ .w6_clicked > text.small { fill: #800; }
+        .svg0 .w7:hover ~ .a6 > text.role { fill: #c00; }
+        .svg0 .w7 ~ .a6_clicked > text.role { fill: #c00; }
+        .svg0 .w7:hover ~ .a6 > path.arc { stroke: #c00; }
+        .svg0 .w7 ~ .a6_clicked > path.arc { stroke: #c00; }
+        .svg0 .w7:hover ~ .a6 > path.arrow { fill: #c00; }
+        .svg0 .w7 ~ .a6_clicked > path.arrow { fill: #c00; }
+        .svg0 .w5:hover ~ .w6 > text.big { fill: #888; }
+        .svg0 .w5 ~ .w6_clicked > text.big { fill: #c00; }
+        .svg0 .w5:hover ~ .w6 > text.small { fill: #666; }
+        .svg0 .w5 ~ .w6_clicked > text.small { fill: #800; }
+        .svg0 .w5:hover ~ .a6 > text.role { fill: #888; }
+        .svg0 .w5 ~ .a6_clicked > text.role { fill: #c00; }
+        .svg0 .w5:hover ~ .a6 > path.arc { stroke: #888; }
+        .svg0 .w5 ~ .a6_clicked > path.arc { stroke: #c00; }
+        .svg0 .w5:hover ~ .a6 > path.arrow { fill: #888; }
+        .svg0 .w5 ~ .a6_clicked > path.arrow { fill: #c00; }
+        .svg0 .w3:hover ~ .w6 > text.big { fill: #888; }
+        .svg0 .w3 ~ .w6_clicked > text.big { fill: #c00; }
+        .svg0 .w3:hover ~ .w6 > text.small { fill: #666; }
+        .svg0 .w3 ~ .w6_clicked > text.small { fill: #800; }
+        .svg0 .w3:hover ~ .a6 > text.role { fill: #888; }
+        .svg0 .w3 ~ .a6_clicked > text.role { fill: #c00; }
+        .svg0 .w3:hover ~ .a6 > path.arc { stroke: #888; }
+        .svg0 .w3 ~ .a6_clicked > path.arc { stroke: #c00; }
+        .svg0 .w3:hover ~ .a6 > path.arrow { fill: #888; }
+        .svg0 .w3 ~ .a6_clicked > path.arrow { fill: #c00; }
+        .svg0 .w12:hover ~ .w6 > text.big { fill: #888; }
+        .svg0 .w12 ~ .w6_clicked > text.big { fill: #c00; }
+        .svg0 .w12:hover ~ .w6 > text.small { fill: #666; }
+        .svg0 .w12 ~ .w6_clicked > text.small { fill: #800; }
+        .svg0 .w12:hover ~ .a6 > text.role { fill: #888; }
+        .svg0 .w12 ~ .a6_clicked > text.role { fill: #c00; }
+        .svg0 .w12:hover ~ .a6 > path.arc { stroke: #888; }
+        .svg0 .w12 ~ .a6_clicked > path.arc { stroke: #c00; }
+        .svg0 .w12:hover ~ .a6 > path.arrow { fill: #888; }
+        .svg0 .w12 ~ .a6_clicked > path.arrow { fill: #c00; }
+        .svg0 .w5:hover ~ .w7 > text.big { fill: #c00; }
+        .svg0 .w5 ~ .w7_clicked > text.big { fill: #c00; }
+        .svg0 .w5:hover ~ .w7 > text.small { fill: #800; }
+        .svg0 .w5 ~ .w7_clicked > text.small { fill: #800; }
+        .svg0 .w5:hover ~ .a7 > text.role { fill: #c00; }
+        .svg0 .w5 ~ .a7_clicked > text.role { fill: #c00; }
+        .svg0 .w5:hover ~ .a7 > path.arc { stroke: #c00; }
+        .svg0 .w5 ~ .a7_clicked > path.arc { stroke: #c00; }
+        .svg0 .w5:hover ~ .a7 > path.arrow { fill: #c00; }
+        .svg0 .w5 ~ .a7_clicked > path.arrow { fill: #c00; }
+        .svg0 .w3:hover ~ .w7 > text.big { fill: #888; }
+        .svg0 .w3 ~ .w7_clicked > text.big { fill: #c00; }
+        .svg0 .w3:hover ~ .w7 > text.small { fill: #666; }
+        .svg0 .w3 ~ .w7_clicked > text.small { fill: #800; }
+        .svg0 .w3:hover ~ .a7 > text.role { fill: #888; }
+        .svg0 .w3 ~ .a7_clicked > text.role { fill: #c00; }
+        .svg0 .w3:hover ~ .a7 > path.arc { stroke: #888; }
+        .svg0 .w3 ~ .a7_clicked > path.arc { stroke: #c00; }
+        .svg0 .w3:hover ~ .a7 > path.arrow { fill: #888; }
+        .svg0 .w3 ~ .a7_clicked > path.arrow { fill: #c00; }
+        .svg0 .w12:hover ~ .w7 > text.big { fill: #888; }
+        .svg0 .w12 ~ .w7_clicked > text.big { fill: #c00; }
+        .svg0 .w12:hover ~ .w7 > text.small { fill: #666; }
+        .svg0 .w12 ~ .w7_clicked > text.small { fill: #800; }
+        .svg0 .w12:hover ~ .a7 > text.role { fill: #888; }
+        .svg0 .w12 ~ .a7_clicked > text.role { fill: #c00; }
+        .svg0 .w12:hover ~ .a7 > path.arc { stroke: #888; }
+        .svg0 .w12 ~ .a7_clicked > path.arc { stroke: #c00; }
+        .svg0 .w12:hover ~ .a7 > path.arrow { fill: #888; }
+        .svg0 .w12 ~ .a7_clicked > path.arrow { fill: #c00; }
+        .svg0 .w5:hover ~ .w8 > text.big { fill: #c00; }
+        .svg0 .w5 ~ .w8_clicked > text.big { fill: #c00; }
+        .svg0 .w5:hover ~ .w8 > text.small { fill: #800; }
+        .svg0 .w5 ~ .w8_clicked > text.small { fill: #800; }
+        .svg0 .w5:hover ~ .a8 > text.role { fill: #c00; }
+        .svg0 .w5 ~ .a8_clicked > text.role { fill: #c00; }
+        .svg0 .w5:hover ~ .a8 > path.arc { stroke: #c00; }
+        .svg0 .w5 ~ .a8_clicked > path.arc { stroke: #c00; }
+        .svg0 .w5:hover ~ .a8 > path.arrow { fill: #c00; }
+        .svg0 .w5 ~ .a8_clicked > path.arrow { fill: #c00; }
+        .svg0 .w3:hover ~ .w8 > text.big { fill: #888; }
+        .svg0 .w3 ~ .w8_clicked > text.big { fill: #c00; }
+        .svg0 .w3:hover ~ .w8 > text.small { fill: #666; }
+        .svg0 .w3 ~ .w8_clicked > text.small { fill: #800; }
+        .svg0 .w3:hover ~ .a8 > text.role { fill: #888; }
+        .svg0 .w3 ~ .a8_clicked > text.role { fill: #c00; }
+        .svg0 .w3:hover ~ .a8 > path.arc { stroke: #888; }
+        .svg0 .w3 ~ .a8_clicked > path.arc { stroke: #c00; }
+        .svg0 .w3:hover ~ .a8 > path.arrow { fill: #888; }
+        .svg0 .w3 ~ .a8_clicked > path.arrow { fill: #c00; }
+        .svg0 .w12:hover ~ .w8 > text.big { fill: #888; }
+        .svg0 .w12 ~ .w8_clicked > text.big { fill: #c00; }
+        .svg0 .w12:hover ~ .w8 > text.small { fill: #666; }
+        .svg0 .w12 ~ .w8_clicked > text.small { fill: #800; }
+        .svg0 .w12:hover ~ .a8 > text.role { fill: #888; }
+        .svg0 .w12 ~ .a8_clicked > text.role { fill: #c00; }
+        .svg0 .w12:hover ~ .a8 > path.arc { stroke: #888; }
+        .svg0 .w12 ~ .a8_clicked > path.arc { stroke: #c00; }
+        .svg0 .w12:hover ~ .a8 > path.arrow { fill: #888; }
+        .svg0 .w12 ~ .a8_clicked > path.arrow { fill: #c00; }
+        .svg0 .w3:hover ~ .w9 > text.big { fill: #c00; }
+        .svg0 .w3 ~ .w9_clicked > text.big { fill: #c00; }
+        .svg0 .w3:hover ~ .w9 > text.small { fill: #800; }
+        .svg0 .w3 ~ .w9_clicked > text.small { fill: #800; }
+        .svg0 .w3:hover ~ .a9 > text.role { fill: #c00; }
+        .svg0 .w3 ~ .a9_clicked > text.role { fill: #c00; }
+        .svg0 .w3:hover ~ .a9 > path.arc { stroke: #c00; }
+        .svg0 .w3 ~ .a9_clicked > path.arc { stroke: #c00; }
+        .svg0 .w3:hover ~ .a9 > path.arrow { fill: #c00; }
+        .svg0 .w3 ~ .a9_clicked > path.arrow { fill: #c00; }
+        .svg0 .w12:hover ~ .w9 > text.big { fill: #888; }
+        .svg0 .w12 ~ .w9_clicked > text.big { fill: #c00; }
+        .svg0 .w12:hover ~ .w9 > text.small { fill: #666; }
+        .svg0 .w12 ~ .w9_clicked > text.small { fill: #800; }
+        .svg0 .w12:hover ~ .a9 > text.role { fill: #888; }
+        .svg0 .w12 ~ .a9_clicked > text.role { fill: #c00; }
+        .svg0 .w12:hover ~ .a9 > path.arc { stroke: #888; }
+        .svg0 .w12 ~ .a9_clicked > path.arc { stroke: #c00; }
+        .svg0 .w12:hover ~ .a9 > path.arrow { fill: #888; }
+        .svg0 .w12 ~ .a9_clicked > path.arrow { fill: #c00; }
+        .svg0 .w11:hover ~ .w10 > text.big { fill: #c00; }
+        .svg0 .w11 ~ .w10_clicked > text.big { fill: #c00; }
+        .svg0 .w11:hover ~ .w10 > text.small { fill: #800; }
+        .svg0 .w11 ~ .w10_clicked > text.small { fill: #800; }
+        .svg0 .w11:hover ~ .a10 > text.role { fill: #c00; }
+        .svg0 .w11 ~ .a10_clicked > text.role { fill: #c00; }
+        .svg0 .w11:hover ~ .a10 > path.arc { stroke: #c00; }
+        .svg0 .w11 ~ .a10_clicked > path.arc { stroke: #c00; }
+        .svg0 .w11:hover ~ .a10 > path.arrow { fill: #c00; }
+        .svg0 .w11 ~ .a10_clicked > path.arrow { fill: #c00; }
+        .svg0 .w12:hover ~ .w10 > text.big { fill: #888; }
+        .svg0 .w12 ~ .w10_clicked > text.big { fill: #c00; }
+        .svg0 .w12:hover ~ .w10 > text.small { fill: #666; }
+        .svg0 .w12 ~ .w10_clicked > text.small { fill: #800; }
+        .svg0 .w12:hover ~ .a10 > text.role { fill: #888; }
+        .svg0 .w12 ~ .a10_clicked > text.role { fill: #c00; }
+        .svg0 .w12:hover ~ .a10 > path.arc { stroke: #888; }
+        .svg0 .w12 ~ .a10_clicked > path.arc { stroke: #c00; }
+        .svg0 .w12:hover ~ .a10 > path.arrow { fill: #888; }
+        .svg0 .w12 ~ .a10_clicked > path.arrow { fill: #c00; }
+        .svg0 .w12:hover ~ .w11 > text.big { fill: #c00; }
+        .svg0 .w12 ~ .w11_clicked > text.big { fill: #c00; }
+        .svg0 .w12:hover ~ .w11 > text.small { fill: #800; }
+        .svg0 .w12 ~ .w11_clicked > text.small { fill: #800; }
+        .svg0 .w12:hover ~ .a11 > text.role { fill: #c00; }
+        .svg0 .w12 ~ .a11_clicked > text.role { fill: #c00; }
+        .svg0 .w12:hover ~ .a11 > path.arc { stroke: #c00; }
+        .svg0 .w12 ~ .a11_clicked > path.arc { stroke: #c00; }
+        .svg0 .w12:hover ~ .a11 > path.arrow { fill: #c00; }
+        .svg0 .w12 ~ .a11_clicked > path.arrow { fill: #c00; }
+        .svg0 .w15:hover ~ .w13 > text.big { fill: #c00; }
+        .svg0 .w15 ~ .w13_clicked > text.big { fill: #c00; }
+        .svg0 .w15:hover ~ .w13 > text.small { fill: #800; }
+        .svg0 .w15 ~ .w13_clicked > text.small { fill: #800; }
+        .svg0 .w15:hover ~ .a13 > text.role { fill: #c00; }
+        .svg0 .w15 ~ .a13_clicked > text.role { fill: #c00; }
+        .svg0 .w15:hover ~ .a13 > path.arc { stroke: #c00; }
+        .svg0 .w15 ~ .a13_clicked > path.arc { stroke: #c00; }
+        .svg0 .w15:hover ~ .a13 > path.arrow { fill: #c00; }
+        .svg0 .w15 ~ .a13_clicked > path.arrow { fill: #c00; }
+        .svg0 .w12:hover ~ .w13 > text.big { fill: #888; }
+        .svg0 .w12 ~ .w13_clicked > text.big { fill: #c00; }
+        .svg0 .w12:hover ~ .w13 > text.small { fill: #666; }
+        .svg0 .w12 ~ .w13_clicked > text.small { fill: #800; }
+        .svg0 .w12:hover ~ .a13 > text.role { fill: #888; }
+        .svg0 .w12 ~ .a13_clicked > text.role { fill: #c00; }
+        .svg0 .w12:hover ~ .a13 > path.arc { stroke: #888; }
+        .svg0 .w12 ~ .a13_clicked > path.arc { stroke: #c00; }
+        .svg0 .w12:hover ~ .a13 > path.arrow { fill: #888; }
+        .svg0 .w12 ~ .a13_clicked > path.arrow { fill: #c00; }
+        .svg0 .w15:hover ~ .w14 > text.big { fill: #c00; }
+        .svg0 .w15 ~ .w14_clicked > text.big { fill: #c00; }
+        .svg0 .w15:hover ~ .w14 > text.small { fill: #800; }
+        .svg0 .w15 ~ .w14_clicked > text.small { fill: #800; }
+        .svg0 .w15:hover ~ .a14 > text.role { fill: #c00; }
+        .svg0 .w15 ~ .a14_clicked > text.role { fill: #c00; }
+        .svg0 .w15:hover ~ .a14 > path.arc { stroke: #c00; }
+        .svg0 .w15 ~ .a14_clicked > path.arc { stroke: #c00; }
+        .svg0 .w15:hover ~ .a14 > path.arrow { fill: #c00; }
+        .svg0 .w15 ~ .a14_clicked > path.arrow { fill: #c00; }
+        .svg0 .w12:hover ~ .w14 > text.big { fill: #888; }
+        .svg0 .w12 ~ .w14_clicked > text.big { fill: #c00; }
+        .svg0 .w12:hover ~ .w14 > text.small { fill: #666; }
+        .svg0 .w12 ~ .w14_clicked > text.small { fill: #800; }
+        .svg0 .w12:hover ~ .a14 > text.role { fill: #888; }
+        .svg0 .w12 ~ .a14_clicked > text.role { fill: #c00; }
+        .svg0 .w12:hover ~ .a14 > path.arc { stroke: #888; }
+        .svg0 .w12 ~ .a14_clicked > path.arc { stroke: #c00; }
+        .svg0 .w12:hover ~ .a14 > path.arrow { fill: #888; }
+        .svg0 .w12 ~ .a14_clicked > path.arrow { fill: #c00; }
+        .svg0 .w12:hover ~ .w15 > text.big { fill: #c00; }
+        .svg0 .w12 ~ .w15_clicked > text.big { fill: #c00; }
+        .svg0 .w12:hover ~ .w15 > text.small { fill: #800; }
+        .svg0 .w12 ~ .w15_clicked > text.small { fill: #800; }
+        .svg0 .w12:hover ~ .a15 > text.role { fill: #c00; }
+        .svg0 .w12 ~ .a15_clicked > text.role { fill: #c00; }
+        .svg0 .w12:hover ~ .a15 > path.arc { stroke: #c00; }
+        .svg0 .w12 ~ .a15_clicked > path.arc { stroke: #c00; }
+        .svg0 .w12:hover ~ .a15 > path.arrow { fill: #c00; }
+        .svg0 .w12 ~ .a15_clicked > path.arrow { fill: #c00; }
+        .svg0 .w12:hover ~ .w16 > text.big { fill: #c00; }
+        .svg0 .w12 ~ .w16_clicked > text.big { fill: #c00; }
+        .svg0 .w12:hover ~ .w16 > text.small { fill: #800; }
+        .svg0 .w12 ~ .w16_clicked > text.small { fill: #800; }
+        .svg0 .w12:hover ~ .a16 > text.role { fill: #c00; }
+        .svg0 .w12 ~ .a16_clicked > text.role { fill: #c00; }
+        .svg0 .w12:hover ~ .a16 > path.arc { stroke: #c00; }
+        .svg0 .w12 ~ .a16_clicked > path.arc { stroke: #c00; }
+        .svg0 .w12:hover ~ .a16 > path.arrow { fill: #c00; }
+        .svg0 .w12 ~ .a16_clicked > path.arrow { fill: #c00; }
+      </style>
+
+    <script>
+        let last_used_view = ''
+
+        function reset(title, svg_object_class) {
+            let new_class_name = svg_object_class + '_clicked'
+            let last_used_class_name = last_used_view + '_clicked'
+
+            if (document.getElementById(svg_object_class).classList.contains(new_class_name)) {
+                document.getElementById(svg_object_class).classList.remove(new_class_name);
+            } else {
+                document.getElementById(svg_object_class).classList.add(new_class_name)
+            }
+
+            try {
+              if (last_used_view !== svg_object_class) {
+                document.getElementById(last_used_view).classList.remove(last_used_class_name)
+              }
+            }
+            catch (e) {
+              console.log(e)
+            }
+
+            last_used_view = svg_object_class
+            document.getElementById("subtext").innerHTML = document.getElementById(title).innerHTML;
+        }
+    </script>
+
+
+      <text x="494.7846096908265" y="140.0" class="big" text-anchor="start" id="subtext"> If you want to make the audience laugh , your punchline needs to be surprising .</text>
+      <g class="w12">
+        <rect x="689" y="96" width="60" height="12" class="hid" />
+        <text x="719" y="108" class="big">needs</text>
+      </g>
+      <g id="a12" class="a12" onclick="reset('a12t', 'a12')">
+      <title id="a12t">If you want to make the audience laugh , your punchline needs to be surprising .</title>
+        <path d="M 719 96 L 719 24" class="arc" />
+        <path d="M 719 96 L 719 24" class="arc hid" />
+        <path d="M 719.57 97.50L 721.51 90.26L 719.57 91.12L 717.63 90.26Z" class="arrow"/>
+        <text x="719" y="22" class="role">root</text>
+      </g>
+      <g class="w3">
+        <rect x="96" y="96" width="48" height="12" class="hid" />
+        <text x="120" y="108" class="big">want</text>
+      </g>
+      <g id="a3" class="a3" onclick="reset('a3t', 'a3')">
+      <title id="a3t">If you want to make the audience laugh ,</title>
+        <path d="M 120.00 96.00A 120.00 120.00 0 0 1 223.92 36.00L 609.65 36.00A 120.00 120.00 0 0 1 713.57 96.00" class="arc" />
+        <path d="M 120.00 96.00A 120.00 120.00 0 0 1 223.92 36.00L 609.65 36.00A 120.00 120.00 0 0 1 713.57 96.00" class="arc hid" />
+        <path d="M 119.25 97.30L 124.55 92.00L 122.44 91.78L 121.19 90.05Z" class="arrow"/>
+        <text x="416" y="34" class="role">advcl</text>
+      </g>
+      <g class="w11">
+        <rect x="569" y="96" width="108" height="12" class="hid" />
+        <text x="623" y="108" class="big">punchline</text>
+      </g>
+      <g id="a11" class="a11" onclick="reset('a11t', 'a11')">
+      <title id="a11t">your punchline</title>
+        <path d="M 623.57 96.00A 24.00 24.00 0 0 1 644.35 84.00L 692.78 84.00A 24.00 24.00 0 0 1 713.57 96.00" class="arc" />
+        <path d="M 623.57 96.00A 24.00 24.00 0 0 1 644.35 84.00L 692.78 84.00A 24.00 24.00 0 0 1 713.57 96.00" class="arc hid" />
+        <path d="M 622.82 97.30L 628.12 92.00L 626.01 91.78L 624.76 90.05Z" class="arrow"/>
+        <text x="668" y="82" class="role">nsubj</text>
+      </g>
+      <g class="w15">
+        <rect x="833" y="96" width="120" height="12" class="hid" />
+        <text x="893" y="108" class="big">surprising</text>
+      </g>
+      <g id="a15" class="a15" onclick="reset('a15t', 'a15')">
+      <title id="a15t">to be surprising</title>
+        <path d="M 725.57 96.00A 72.00 72.00 0 0 1 787.92 60.00L 831.22 60.00A 72.00 72.00 0 0 1 893.57 96.00" class="arc" />
+        <path d="M 725.57 96.00A 72.00 72.00 0 0 1 787.92 60.00L 831.22 60.00A 72.00 72.00 0 0 1 893.57 96.00" class="arc hid" />
+        <path d="M 894.32 97.30L 892.38 90.05L 891.13 91.78L 889.02 92.00Z" class="arrow"/>
+        <text x="809" y="58" class="role">xcomp</text>
+      </g>
+      <g class="w16">
+        <rect x="965" y="96" width="12" height="12" class="hid" />
+        <text x="971" y="108" class="big">.</text>
+      </g>
+      <g id="a16" class="a16" onclick="reset('a16t', 'a16')">
+      <title id="a16t">.</title>
+        <path d="M 725.57 96.00A 96.00 96.00 0 0 1 808.71 48.00L 888.43 48.00A 96.00 96.00 0 0 1 971.57 96.00" class="arc" />
+        <path d="M 725.57 96.00A 96.00 96.00 0 0 1 808.71 48.00L 888.43 48.00A 96.00 96.00 0 0 1 971.57 96.00" class="arc hid" />
+        <path d="M 972.32 97.30L 970.38 90.05L 969.13 91.78L 967.02 92.00Z" class="arrow"/>
+        <text x="848" y="46" class="role">punct</text>
+      </g>
+      <g class="w1">
+        <rect x="12" y="96" width="24" height="12" class="hid" />
+        <text x="24" y="108" class="big">If</text>
+      </g>
+      <g id="a1" class="a1" onclick="reset('a1t', 'a1')">
+      <title id="a1t">If</title>
+        <path d="M 24.00 96.00A 48.00 48.00 0 0 1 65.57 72.00L 72.43 72.00A 48.00 48.00 0 0 1 114.00 96.00" class="arc" />
+        <path d="M 24.00 96.00A 48.00 48.00 0 0 1 65.57 72.00L 72.43 72.00A 48.00 48.00 0 0 1 114.00 96.00" class="arc hid" />
+        <path d="M 23.25 97.30L 28.55 92.00L 26.44 91.78L 25.19 90.05Z" class="arrow"/>
+        <text x="69" y="70" class="role">mark</text>
+      </g>
+      <g class="w2">
+        <rect x="48" y="96" width="36" height="12" class="hid" />
+        <text x="66" y="108" class="big">you</text>
+      </g>
+      <g id="a2" class="a2" onclick="reset('a2t', 'a2')">
+      <title id="a2t">you</title>
+        <path d="M 66.00 96.00A 24.00 24.00 0 0 1 86.78 84.00L 93.22 84.00A 24.00 24.00 0 0 1 114.00 96.00" class="arc" />
+        <path d="M 66.00 96.00A 24.00 24.00 0 0 1 86.78 84.00L 93.22 84.00A 24.00 24.00 0 0 1 114.00 96.00" class="arc hid" />
+        <path d="M 65.25 97.30L 70.55 92.00L 68.44 91.78L 67.19 90.05Z" class="arrow"/>
+        <text x="90" y="82" class="role">nsubj</text>
+      </g>
+      <g class="w5">
+        <rect x="197" y="96" width="48" height="12" class="hid" />
+        <text x="221" y="108" class="big">make</text>
+      </g>
+      <g id="a5" class="a5" onclick="reset('a5t', 'a5')">
+      <title id="a5t">to make the audience laugh</title>
+        <path d="M 126.00 96.00A 48.00 48.00 0 0 1 167.57 72.00L 180.00 72.00A 48.00 48.00 0 0 1 221.57 96.00" class="arc" />
+        <path d="M 126.00 96.00A 48.00 48.00 0 0 1 167.57 72.00L 180.00 72.00A 48.00 48.00 0 0 1 221.57 96.00" class="arc hid" />
+        <path d="M 222.32 97.30L 220.38 90.05L 219.13 91.78L 217.02 92.00Z" class="arrow"/>
+        <text x="173" y="70" class="role">xcomp</text>
+      </g>
+      <g class="w9">
+        <rect x="485" y="96" width="12" height="12" class="hid" />
+        <text x="491" y="108" class="big">,</text>
+      </g>
+      <g id="a9" class="a9" onclick="reset('a9t', 'a9')">
+      <title id="a9t">,</title>
+        <path d="M 126.00 96.00A 96.00 96.00 0 0 1 209.14 48.00L 408.43 48.00A 96.00 96.00 0 0 1 491.57 96.00" class="arc" />
+        <path d="M 126.00 96.00A 96.00 96.00 0 0 1 209.14 48.00L 408.43 48.00A 96.00 96.00 0 0 1 491.57 96.00" class="arc hid" />
+        <path d="M 492.32 97.30L 490.38 90.05L 489.13 91.78L 487.02 92.00Z" class="arrow"/>
+        <text x="308" y="46" class="role">punct</text>
+      </g>
+      <g class="w10">
+        <rect x="509" y="96" width="48" height="12" class="hid" />
+        <text x="533" y="108" class="big">your</text>
+      </g>
+      <g id="a10" class="a10" onclick="reset('a10t', 'a10')">
+      <title id="a10t">your</title>
+        <path d="M 533.57 96.00A 24.00 24.00 0 0 1 554.35 84.00L 596.78 84.00A 24.00 24.00 0 0 1 617.57 96.00" class="arc" />
+        <path d="M 533.57 96.00A 24.00 24.00 0 0 1 554.35 84.00L 596.78 84.00A 24.00 24.00 0 0 1 617.57 96.00" class="arc hid" />
+        <path d="M 532.82 97.30L 538.12 92.00L 536.01 91.78L 534.76 90.05Z" class="arrow"/>
+        <text x="575" y="82" class="role">nmod:poss</text>
+      </g>
+      <g class="w13">
+        <rect x="761" y="96" width="24" height="12" class="hid" />
+        <text x="773" y="108" class="big">to</text>
+      </g>
+      <g id="a13" class="a13" onclick="reset('a13t', 'a13')">
+      <title id="a13t">to</title>
+        <path d="M 773.57 96.00A 48.00 48.00 0 0 1 815.14 72.00L 846.00 72.00A 48.00 48.00 0 0 1 887.57 96.00" class="arc" />
+        <path d="M 773.57 96.00A 48.00 48.00 0 0 1 815.14 72.00L 846.00 72.00A 48.00 48.00 0 0 1 887.57 96.00" class="arc hid" />
+        <path d="M 772.82 97.30L 778.12 92.00L 776.01 91.78L 774.76 90.05Z" class="arrow"/>
+        <text x="830" y="70" class="role">mark</text>
+      </g>
+      <g class="w14">
+        <rect x="797" y="96" width="24" height="12" class="hid" />
+        <text x="809" y="108" class="big">be</text>
+      </g>
+      <g id="a14" class="a14" onclick="reset('a14t', 'a14')">
+      <title id="a14t">be</title>
+        <path d="M 809.57 96.00A 24.00 24.00 0 0 1 830.35 84.00L 866.78 84.00A 24.00 24.00 0 0 1 887.57 96.00" class="arc" />
+        <path d="M 809.57 96.00A 24.00 24.00 0 0 1 830.35 84.00L 866.78 84.00A 24.00 24.00 0 0 1 887.57 96.00" class="arc hid" />
+        <path d="M 808.82 97.30L 814.12 92.00L 812.01 91.78L 810.76 90.05Z" class="arrow"/>
+        <text x="848" y="82" class="role">cop</text>
+      </g>
+      <g class="w4">
+        <rect x="156" y="96" width="24" height="12" class="hid" />
+        <text x="168" y="108" class="big">to</text>
+      </g>
+      <g id="a4" class="a4" onclick="reset('a4t', 'a4')">
+      <title id="a4t">to</title>
+        <path d="M 168.00 96.00A 24.00 24.00 0 0 1 188.78 84.00L 194.78 84.00A 24.00 24.00 0 0 1 215.57 96.00" class="arc" />
+        <path d="M 168.00 96.00A 24.00 24.00 0 0 1 188.78 84.00L 194.78 84.00A 24.00 24.00 0 0 1 215.57 96.00" class="arc hid" />
+        <path d="M 167.25 97.30L 172.55 92.00L 170.44 91.78L 169.19 90.05Z" class="arrow"/>
+        <text x="191" y="82" class="role">mark</text>
+      </g>
+      <g class="w7">
+        <rect x="305" y="96" width="96" height="12" class="hid" />
+        <text x="353" y="108" class="big">audience</text>
+      </g>
+      <g id="a7" class="a7" onclick="reset('a7t', 'a7')">
+      <title id="a7t">the audience</title>
+        <path d="M 227.57 96.00A 48.00 48.00 0 0 1 269.14 72.00L 312.00 72.00A 48.00 48.00 0 0 1 353.57 96.00" class="arc" />
+        <path d="M 227.57 96.00A 48.00 48.00 0 0 1 269.14 72.00L 312.00 72.00A 48.00 48.00 0 0 1 353.57 96.00" class="arc hid" />
+        <path d="M 354.32 97.30L 352.38 90.05L 351.13 91.78L 349.02 92.00Z" class="arrow"/>
+        <text x="290" y="70" class="role">obj</text>
+      </g>
+      <g class="w8">
+        <rect x="413" y="96" width="60" height="12" class="hid" />
+        <text x="443" y="108" class="big">laugh</text>
+      </g>
+      <g id="a8" class="a8" onclick="reset('a8t', 'a8')">
+      <title id="a8t">laugh</title>
+        <path d="M 227.57 96.00A 72.00 72.00 0 0 1 289.92 60.00L 381.22 60.00A 72.00 72.00 0 0 1 443.57 96.00" class="arc" />
+        <path d="M 227.57 96.00A 72.00 72.00 0 0 1 289.92 60.00L 381.22 60.00A 72.00 72.00 0 0 1 443.57 96.00" class="arc hid" />
+        <path d="M 444.32 97.30L 442.38 90.05L 441.13 91.78L 439.02 92.00Z" class="arrow"/>
+        <text x="335" y="58" class="role">xcomp</text>
+      </g>
+      <g class="w6">
+        <rect x="257" y="96" width="36" height="12" class="hid" />
+        <text x="275" y="108" class="big">the</text>
+      </g>
+      <g id="a6" class="a6" onclick="reset('a6t', 'a6')">
+      <title id="a6t">the</title>
+        <path d="M 275.57 96.00A 24.00 24.00 0 0 1 296.35 84.00L 326.78 84.00A 24.00 24.00 0 0 1 347.57 96.00" class="arc" />
+        <path d="M 275.57 96.00A 24.00 24.00 0 0 1 296.35 84.00L 326.78 84.00A 24.00 24.00 0 0 1 347.57 96.00" class="arc hid" />
+        <path d="M 274.82 97.30L 280.12 92.00L 278.01 91.78L 276.76 90.05Z" class="arrow"/>
+        <text x="311" y="82" class="role">det</text>
+      </g>
+    </svg>
+  </body>
+</html>
+

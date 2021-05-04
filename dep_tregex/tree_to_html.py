@@ -124,6 +124,15 @@ _HEAD_HOVER_STYLES = [
     u'.a%%i > path.arrow { fill: %s; }' % (_COLOR_BIG_H1,)
     ]
 
+_HEAD_HOVER_STYLES_CLICKED = [
+    u'.w%%i_clicked > text.big { fill: %s; }' % (_COLOR_BIG_H1,),
+    u'.w%%i_clicked > text.small { fill: %s; }' % (_COLOR_SMALL_H1,),
+    u'.a%%i_clicked > text.role { fill: %s; }' % (_COLOR_BIG_H1,),
+    u'.a%%i_clicked > path.arc { stroke: %s; }' % (_COLOR_BIG_H1,),
+    u'.a%%i_clicked > path.arrow { fill: %s; }' % (_COLOR_BIG_H1,)
+    ]
+
+
 # Styles that are applied to a tree node when its parent is hovered over,
 _PARENT_HOVER_STYLES = [
     u'.w%%i > text.big { fill: %s; }' % (_COLOR_BIG_H0,),
@@ -253,7 +262,7 @@ def _draw_label(file, text, x, y, css_class):
     file.write(u'      </g>\n')
 
 
-def _draw_root_arc(file, x, y, height_in_units, deprel, css_class):
+def _draw_root_arc(file, x, y, height_in_units, deprel, css_class, hovertext):
     """
     Draw a vertical "arc from the root" to the node at (x, y).
     Enclose elements in a <g class="...">.
@@ -261,7 +270,12 @@ def _draw_root_arc(file, x, y, height_in_units, deprel, css_class):
     height = height_in_units * _ARC_HEIGHT_UNIT
 
     # Start.
-    file.write(u'      <g class="%s">\n' % css_class)
+    file.write(
+        u'      <g id="%s" class="%s" onclick="reset(\'%s\', \'%s\')">\n' % (
+            css_class, css_class, css_class + "t", css_class
+        )
+    )
+    file.write(u'      <title id="%s">%s</title>\n' % (css_class + "t", hovertext))
 
     # Path.
     path = 'M %i %i L %i %i' % (x, y, x, y - height)
@@ -280,7 +294,7 @@ def _draw_root_arc(file, x, y, height_in_units, deprel, css_class):
     file.write(u'      </g>\n')
 
 
-def _draw_arc(file, start_x, end_x, y, height_in_units, deprel, css_class):
+def _draw_arc(file, start_x, end_x, y, height_in_units, deprel, css_class, hovertext):
     """
     Draw an arc from the node at (start_x, y) to the node at (end_x, y).
     Enclose elements in a <g class="...">.
@@ -290,7 +304,12 @@ def _draw_arc(file, start_x, end_x, y, height_in_units, deprel, css_class):
     length = _arc_min_length(height_in_units)
 
     # Start.
-    file.write(u'      <g class="%s">\n' % css_class)
+    file.write(
+        u'      <g id="%s" class="%s" onclick="reset(\'%s\', \'%s\')">\n' % (
+            css_class, css_class, css_class + "t", css_class
+        )
+    )
+    file.write(u'      <title id="%s">%s</title>\n' % (css_class + "t", hovertext))
 
     # Path.
     path = (
@@ -362,6 +381,22 @@ def write_tree_html(file, tree, fields=[], highlight_nodes=[], static=False):
     N = len(tree)
     if N == 0:
         return
+
+    subtree_texts = [""] * (N + 1)
+
+    def create_subtree_texts(i=0):
+        if subtree_texts[i]:
+            return subtree_texts[i]
+        texts_left, texts_right = [], []
+        for c in tree._children[i]:
+            if c < i:
+                texts_left.append(create_subtree_texts(c))
+            else:
+                texts_right.append(create_subtree_texts(c))
+        subtree_texts[i] = " ".join(texts_left + [tree._forms[i - 1] if i > 0 else ""] + texts_right)
+        return subtree_texts[i]
+
+    create_subtree_texts()
 
     # Collect all tree arcs.
     arcs = [(node, tree.heads(node)) for node in range(1, N + 1)]
@@ -440,25 +475,56 @@ def write_tree_html(file, tree, fields=[], highlight_nodes=[], static=False):
 
     # Start drawing.
     file.write(u'    <svg width="%i" height="%i" class="%s">\n' %
-        (svg_width, svg_height, uid))
+        (svg_width, svg_height + 30, uid))
 
     # Write hover styles.
     if not static:
         file.write(u'      <style type="text/css">\n')
         for node in range(1, N + 1):
             # Start with head.
-            styles = _HEAD_HOVER_STYLES
+            styles, styles_clicked = _HEAD_HOVER_STYLES, _HEAD_HOVER_STYLES_CLICKED
             head = tree.heads(node)
             # Iterate through all parents.
             while head != 0:
                 # Highlight a node its arc when head's label is hovered over.
-                for style in styles:
-                    file.write(u'        .%s .w%i:hover ~ %s\n' %
-                        (uid, head, style % node))
+                for style, style_clicked in zip(styles, styles_clicked):
+                    file.write(u'        .%s .w%i:hover ~ %s\n' % (uid, head, style % node))
+                    file.write(u'        .%s .w%i ~ %s\n' % (uid, head, style_clicked % node))
                 # Go to head's head.
                 head = tree.heads(head)
                 styles = _PARENT_HOVER_STYLES
         file.write(u'      </style>\n')
+
+        file.write("""
+    <script>
+        let last_used_view = ''
+
+        function reset(title, svg_object_class) {
+            let new_class_name = svg_object_class + '_clicked'
+            let last_used_class_name = last_used_view + '_clicked'
+
+            if (document.getElementById(svg_object_class).classList.contains(new_class_name)) {
+                document.getElementById(svg_object_class).classList.remove(new_class_name);
+            } else {
+                document.getElementById(svg_object_class).classList.add(new_class_name)
+            }
+
+            try {
+              if (last_used_view !== svg_object_class) {
+                document.getElementById(last_used_view).classList.remove(last_used_class_name)
+              }
+            }
+            catch (e) {
+              console.log(e)
+            }
+
+            last_used_view = svg_object_class
+            document.getElementById("subtext").innerHTML = document.getElementById(title).innerHTML;
+        }
+    </script>
+""")
+
+        file.write(f'<text x="{svg_width / 2}" y="{svg_height + 20}" class="big" text-anchor="start" id="subtext">{subtree_texts[0]}</text>\n')
 
     # Write text and arcs in topsorted order.
     queue = tree.children(0)[:]
@@ -480,11 +546,11 @@ def write_tree_html(file, tree, fields=[], highlight_nodes=[], static=False):
 
         # Draw arc.
         if head == 0:
-            _draw_root_arc(file, center, baseline, height, deprel, arc_cls)
+            _draw_root_arc(file, center, baseline, height, deprel, arc_cls, subtree_texts[node])
         else:
             head_center = centers[head - 1]
             head_center += _parent_arc_start_offset(tree, node)
-            _draw_arc(file, head_center, center, baseline, height, deprel, arc_cls)
+            _draw_arc(file, head_center, center, baseline, height, deprel, arc_cls, subtree_texts[node])
 
         # Enqueue children.
         queue += tree.children(node)
