@@ -1,6 +1,6 @@
 from __future__ import print_function
 
-import cgi
+import html
 import math
 
 ## -----------------------------------------------------------------------------
@@ -171,7 +171,7 @@ def _label(tree, node, fields):
     if 'feats' in fields:
         label += u'\n' + u'|'.join(tree.feats(node))
 
-    return cgi.escape(label)
+    return html.escape(label)
 
 
 def _label_height(text):
@@ -286,7 +286,7 @@ def _draw_root_arc(file, x, y, height_in_units, deprel, css_class, hovertext):
     _draw_arrow(file, x, y, math.pi / 2)
 
     # Role.
-    deprel = cgi.escape(deprel)
+    deprel = html.escape(deprel)
     file.write(u'        <text x="%i" y="%i" class="role">%s</text>\n' %
         (x, y - height - 0.2 * _SMALL_FONT, deprel))
 
@@ -331,7 +331,7 @@ def _draw_arc(file, start_x, end_x, y, height_in_units, deprel, css_class, hover
     _draw_arrow(file, end_x, y, arrow_angle)
 
     # Role.
-    deprel = cgi.escape(deprel)
+    deprel = html.escape(deprel)
     file.write(u'        <text x="%i" y="%i" class="role">%s</text>\n' %
         ((start_x + end_x) / 2, y - height - 0.2 * _SMALL_FONT, deprel))
 

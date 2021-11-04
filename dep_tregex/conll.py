@@ -36,6 +36,8 @@ def read_trees_conll(text, errors='strict'):
         [], [], [], [], [], [], []
 
     for line_no, line in enumerate(text.split("\n")):
+        if line.startswith("#"):
+            continue
         try:
             # On empty line, yield the tree (if the tree is not empty).
             if not line:
@@ -54,6 +56,11 @@ def read_trees_conll(text, errors='strict'):
             if len(parts) != 10:
                 msg = 'expected 10 tab-separated fields, got %i'
                 raise ValueError(msg % len(parts))
+
+            if '-' in parts[0]:
+                # multiword token, e. g. 'del' (es) = 'de el'
+                continue
+
             if str(parts[0]) != str(node):
                 msg = 'field 0: expected %r, got %r'
                 raise ValueError(msg % (str(node), parts[0]))
@@ -62,7 +69,6 @@ def read_trees_conll(text, errors='strict'):
                     continue
                 msg = 'field %i: empty'
                 raise ValueError(msg % i)
-
             # Parse the fields.
             node += 1
             form = parts[1]
