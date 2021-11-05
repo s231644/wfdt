@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <style type="text/css">
+        svg { display: block; }
+    </style>
+        <style type="text/css">
+      /* Generic */
+      * { stroke: none; fill: none; transition: 0.1s ease-out, stroke-dasharray 0.02s; }
+      text { font-family: sans-serif; text-anchor: middle; cursor: default; }
+      .hid { opacity: 0.0; }
+      rect.hid { fill: #000; stroke: #000; stroke-width: 10.00px; }
+      path.hid { fill: none; stroke: #000; stroke-width: 10.00px; }
+
+      /* Labels & arcs */
+      .big { font-size: 12px; fill: #000; font-weight: bold; }
+      .small { font-size: 10px; fill: #444; }
+      .user-hl > .big   { fill: #08c; }
+      .user-hl > .small { fill: #048; }
+      .role { font-size: 10px; fill: #444; font-style: italic; }
+      .arc { stroke: black; stroke-width: 0.50px; }
+      .arrow { fill: #000; }
+
+      /* Label and arc highlight on hover */
+      g:hover > text.big { fill: #f00; }
+      g:hover > text.small { fill: #900; }
+      g:hover > text.role { fill: #f00; }
+      g:hover > path.arc { stroke: #f00; }
+      g:hover > path.arrow { fill: #f00; }
+
+      /* Arc highlight on label hover */
+      g:hover + g > text.role { fill: #f00; }
+      g:hover + g > path.arc { stroke: #f00; stroke-dasharray: 5,5; }
+      g:hover + g > path.arrow { fill: #f00; }
+    </style>
+  </head>
+  <body>
+    <svg width="965" height="150" class="svg5">
+      <style type="text/css">
+        .svg5 .w6:hover ~ .w1 > text.big { fill: #c00; }
+        .svg5 .w6 ~ .w1_clicked > text.big { fill: #c00; }
+        .svg5 .w6:hover ~ .w1 > text.small { fill: #800; }
+        .svg5 .w6 ~ .w1_clicked > text.small { fill: #800; }
+        .svg5 .w6:hover ~ .a1 > text.role { fill: #c00; }
+        .svg5 .w6 ~ .a1_clicked > text.role { fill: #c00; }
+        .svg5 .w6:hover ~ .a1 > path.arc { stroke: #c00; }
+        .svg5 .w6 ~ .a1_clicked > path.arc { stroke: #c00; }
+        .svg5 .w6:hover ~ .a1 > path.arrow { fill: #c00; }
+        .svg5 .w6 ~ .a1_clicked > path.arrow { fill: #c00; }
+        .svg5 .w6:hover ~ .w2 > text.big { fill: #c00; }
+        .svg5 .w6 ~ .w2_clicked > text.big { fill: #c00; }
+        .svg5 .w6:hover ~ .w2 > text.small { fill: #800; }
+        .svg5 .w6 ~ .w2_clicked > text.small { fill: #800; }
+        .svg5 .w6:hover ~ .a2 > text.role { fill: #c00; }
+        .svg5 .w6 ~ .a2_clicked > text.role { fill: #c00; }
+        .svg5 .w6:hover ~ .a2 > path.arc { stroke: #c00; }
+        .svg5 .w6 ~ .a2_clicked > path.arc { stroke: #c00; }
+        .svg5 .w6:hover ~ .a2 > path.arrow { fill: #c00; }
+        .svg5 .w6 ~ .a2_clicked > path.arrow { fill: #c00; }
+        .svg5 .w6:hover ~ .w3 > text.big { fill: #c00; }
+        .svg5 .w6 ~ .w3_clicked > text.big { fill: #c00; }
+        .svg5 .w6:hover ~ .w3 > text.small { fill: #800; }
+        .svg5 .w6 ~ .w3_clicked > text.small { fill: #800; }
+        .svg5 .w6:hover ~ .a3 > text.role { fill: #c00; }
+        .svg5 .w6 ~ .a3_clicked > text.role { fill: #c00; }
+        .svg5 .w6:hover ~ .a3 > path.arc { stroke: #c00; }
+        .svg5 .w6 ~ .a3_clicked > path.arc { stroke: #c00; }
+        .svg5 .w6:hover ~ .a3 > path.arrow { fill: #c00; }
+        .svg5 .w6 ~ .a3_clicked > path.arrow { fill: #c00; }
+        .svg5 .w6:hover ~ .w4 > text.big { fill: #c00; }
+        .svg5 .w6 ~ .w4_clicked > text.big { fill: #c00; }
+        .svg5 .w6:hover ~ .w4 > text.small { fill: #800; }
+        .svg5 .w6 ~ .w4_clicked > text.small { fill: #800; }
+        .svg5 .w6:hover ~ .a4 > text.role { fill: #c00; }
+        .svg5 .w6 ~ .a4_clicked > text.role { fill: #c00; }
+        .svg5 .w6:hover ~ .a4 > path.arc { stroke: #c00; }
+        .svg5 .w6 ~ .a4_clicked > path.arc { stroke: #c00; }
+        .svg5 .w6:hover ~ .a4 > path.arrow { fill: #c00; }
+        .svg5 .w6 ~ .a4_clicked > path.arrow { fill: #c00; }
+        .svg5 .w6:hover ~ .w5 > text.big { fill: #c00; }
+        .svg5 .w6 ~ .w5_clicked > text.big { fill: #c00; }
+        .svg5 .w6:hover ~ .w5 > text.small { fill: #800; }
+        .svg5 .w6 ~ .w5_clicked > text.small { fill: #800; }
+        .svg5 .w6:hover ~ .a5 > text.role { fill: #c00; }
+        .svg5 .w6 ~ .a5_clicked > text.role { fill: #c00; }
+        .svg5 .w6:hover ~ .a5 > path.arc { stroke: #c00; }
+        .svg5 .w6 ~ .a5_clicked > path.arc { stroke: #c00; }
+        .svg5 .w6:hover ~ .a5 > path.arrow { fill: #c00; }
+        .svg5 .w6 ~ .a5_clicked > path.arrow { fill: #c00; }
+        .svg5 .w8:hover ~ .w7 > text.big { fill: #c00; }
+        .svg5 .w8 ~ .w7_clicked > text.big { fill: #c00; }
+        .svg5 .w8:hover ~ .w7 > text.small { fill: #800; }
+        .svg5 .w8 ~ .w7_clicked > text.small { fill: #800; }
+        .svg5 .w8:hover ~ .a7 > text.role { fill: #c00; }
+        .svg5 .w8 ~ .a7_clicked > text.role { fill: #c00; }
+        .svg5 .w8:hover ~ .a7 > path.arc { stroke: #c00; }
+        .svg5 .w8 ~ .a7_clicked > path.arc { stroke: #c00; }
+        .svg5 .w8:hover ~ .a7 > path.arrow { fill: #c00; }
+        .svg5 .w8 ~ .a7_clicked > path.arrow { fill: #c00; }
+        .svg5 .w6:hover ~ .w7 > text.big { fill: #888; }
+        .svg5 .w6 ~ .w7_clicked > text.big { fill: #c00; }
+        .svg5 .w6:hover ~ .w7 > text.small { fill: #666; }
+        .svg5 .w6 ~ .w7_clicked > text.small { fill: #800; }
+        .svg5 .w6:hover ~ .a7 > text.role { fill: #888; }
+        .svg5 .w6 ~ .a7_clicked > text.role { fill: #c00; }
+        .svg5 .w6:hover ~ .a7 > path.arc { stroke: #888; }
+        .svg5 .w6 ~ .a7_clicked > path.arc { stroke: #c00; }
+        .svg5 .w6:hover ~ .a7 > path.arrow { fill: #888; }
+        .svg5 .w6 ~ .a7_clicked > path.arrow { fill: #c00; }
+        .svg5 .w6:hover ~ .w8 > text.big { fill: #c00; }
+        .svg5 .w6 ~ .w8_clicked > text.big { fill: #c00; }
+        .svg5 .w6:hover ~ .w8 > text.small { fill: #800; }
+        .svg5 .w6 ~ .w8_clicked > text.small { fill: #800; }
+        .svg5 .w6:hover ~ .a8 > text.role { fill: #c00; }
+        .svg5 .w6 ~ .a8_clicked > text.role { fill: #c00; }
+        .svg5 .w6:hover ~ .a8 > path.arc { stroke: #c00; }
+        .svg5 .w6 ~ .a8_clicked > path.arc { stroke: #c00; }
+        .svg5 .w6:hover ~ .a8 > path.arrow { fill: #c00; }
+        .svg5 .w6 ~ .a8_clicked > path.arrow { fill: #c00; }
+        .svg5 .w8:hover ~ .w9 > text.big { fill: #c00; }
+        .svg5 .w8 ~ .w9_clicked > text.big { fill: #c00; }
+        .svg5 .w8:hover ~ .w9 > text.small { fill: #800; }
+        .svg5 .w8 ~ .w9_clicked > text.small { fill: #800; }
+        .svg5 .w8:hover ~ .a9 > text.role { fill: #c00; }
+        .svg5 .w8 ~ .a9_clicked > text.role { fill: #c00; }
+        .svg5 .w8:hover ~ .a9 > path.arc { stroke: #c00; }
+        .svg5 .w8 ~ .a9_clicked > path.arc { stroke: #c00; }
+        .svg5 .w8:hover ~ .a9 > path.arrow { fill: #c00; }
+        .svg5 .w8 ~ .a9_clicked > path.arrow { fill: #c00; }
+        .svg5 .w6:hover ~ .w9 > text.big { fill: #888; }
+        .svg5 .w6 ~ .w9_clicked > text.big { fill: #c00; }
+        .svg5 .w6:hover ~ .w9 > text.small { fill: #666; }
+        .svg5 .w6 ~ .w9_clicked > text.small { fill: #800; }
+        .svg5 .w6:hover ~ .a9 > text.role { fill: #888; }
+        .svg5 .w6 ~ .a9_clicked > text.role { fill: #c00; }
+        .svg5 .w6:hover ~ .a9 > path.arc { stroke: #888; }
+        .svg5 .w6 ~ .a9_clicked > path.arc { stroke: #c00; }
+        .svg5 .w6:hover ~ .a9 > path.arrow { fill: #888; }
+        .svg5 .w6 ~ .a9_clicked > path.arrow { fill: #c00; }
+        .svg5 .w8:hover ~ .w10 > text.big { fill: #c00; }
+        .svg5 .w8 ~ .w10_clicked > text.big { fill: #c00; }
+        .svg5 .w8:hover ~ .w10 > text.small { fill: #800; }
+        .svg5 .w8 ~ .w10_clicked > text.small { fill: #800; }
+        .svg5 .w8:hover ~ .a10 > text.role { fill: #c00; }
+        .svg5 .w8 ~ .a10_clicked > text.role { fill: #c00; }
+        .svg5 .w8:hover ~ .a10 > path.arc { stroke: #c00; }
+        .svg5 .w8 ~ .a10_clicked > path.arc { stroke: #c00; }
+        .svg5 .w8:hover ~ .a10 > path.arrow { fill: #c00; }
+        .svg5 .w8 ~ .a10_clicked > path.arrow { fill: #c00; }
+        .svg5 .w6:hover ~ .w10 > text.big { fill: #888; }
+        .svg5 .w6 ~ .w10_clicked > text.big { fill: #c00; }
+        .svg5 .w6:hover ~ .w10 > text.small { fill: #666; }
+        .svg5 .w6 ~ .w10_clicked > text.small { fill: #800; }
+        .svg5 .w6:hover ~ .a10 > text.role { fill: #888; }
+        .svg5 .w6 ~ .a10_clicked > text.role { fill: #c00; }
+        .svg5 .w6:hover ~ .a10 > path.arc { stroke: #888; }
+        .svg5 .w6 ~ .a10_clicked > path.arc { stroke: #c00; }
+        .svg5 .w6:hover ~ .a10 > path.arrow { fill: #888; }
+        .svg5 .w6 ~ .a10_clicked > path.arrow { fill: #c00; }
+        .svg5 .w6:hover ~ .w11 > text.big { fill: #c00; }
+        .svg5 .w6 ~ .w11_clicked > text.big { fill: #c00; }
+        .svg5 .w6:hover ~ .w11 > text.small { fill: #800; }
+        .svg5 .w6 ~ .w11_clicked > text.small { fill: #800; }
+        .svg5 .w6:hover ~ .a11 > text.role { fill: #c00; }
+        .svg5 .w6 ~ .a11_clicked > text.role { fill: #c00; }
+        .svg5 .w6:hover ~ .a11 > path.arc { stroke: #c00; }
+        .svg5 .w6 ~ .a11_clicked > path.arc { stroke: #c00; }
+        .svg5 .w6:hover ~ .a11 > path.arrow { fill: #c00; }
+        .svg5 .w6 ~ .a11_clicked > path.arrow { fill: #c00; }
+        .svg5 .w15:hover ~ .w12 > text.big { fill: #c00; }
+        .svg5 .w15 ~ .w12_clicked > text.big { fill: #c00; }
+        .svg5 .w15:hover ~ .w12 > text.small { fill: #800; }
+        .svg5 .w15 ~ .w12_clicked > text.small { fill: #800; }
+        .svg5 .w15:hover ~ .a12 > text.role { fill: #c00; }
+        .svg5 .w15 ~ .a12_clicked > text.role { fill: #c00; }
+        .svg5 .w15:hover ~ .a12 > path.arc { stroke: #c00; }
+        .svg5 .w15 ~ .a12_clicked > path.arc { stroke: #c00; }
+        .svg5 .w15:hover ~ .a12 > path.arrow { fill: #c00; }
+        .svg5 .w15 ~ .a12_clicked > path.arrow { fill: #c00; }
+        .svg5 .w6:hover ~ .w12 > text.big { fill: #888; }
+        .svg5 .w6 ~ .w12_clicked > text.big { fill: #c00; }
+        .svg5 .w6:hover ~ .w12 > text.small { fill: #666; }
+        .svg5 .w6 ~ .w12_clicked > text.small { fill: #800; }
+        .svg5 .w6:hover ~ .a12 > text.role { fill: #888; }
+        .svg5 .w6 ~ .a12_clicked > text.role { fill: #c00; }
+        .svg5 .w6:hover ~ .a12 > path.arc { stroke: #888; }
+        .svg5 .w6 ~ .a12_clicked > path.arc { stroke: #c00; }
+        .svg5 .w6:hover ~ .a12 > path.arrow { fill: #888; }
+        .svg5 .w6 ~ .a12_clicked > path.arrow { fill: #c00; }
+        .svg5 .w15:hover ~ .w13 > text.big { fill: #c00; }
+        .svg5 .w15 ~ .w13_clicked > text.big { fill: #c00; }
+        .svg5 .w15:hover ~ .w13 > text.small { fill: #800; }
+        .svg5 .w15 ~ .w13_clicked > text.small { fill: #800; }
+        .svg5 .w15:hover ~ .a13 > text.role { fill: #c00; }
+        .svg5 .w15 ~ .a13_clicked > text.role { fill: #c00; }
+        .svg5 .w15:hover ~ .a13 > path.arc { stroke: #c00; }
+        .svg5 .w15 ~ .a13_clicked > path.arc { stroke: #c00; }
+        .svg5 .w15:hover ~ .a13 > path.arrow { fill: #c00; }
+        .svg5 .w15 ~ .a13_clicked > path.arrow { fill: #c00; }
+        .svg5 .w6:hover ~ .w13 > text.big { fill: #888; }
+        .svg5 .w6 ~ .w13_clicked > text.big { fill: #c00; }
+        .svg5 .w6:hover ~ .w13 > text.small { fill: #666; }
+        .svg5 .w6 ~ .w13_clicked > text.small { fill: #800; }
+        .svg5 .w6:hover ~ .a13 > text.role { fill: #888; }
+        .svg5 .w6 ~ .a13_clicked > text.role { fill: #c00; }
+        .svg5 .w6:hover ~ .a13 > path.arc { stroke: #888; }
+        .svg5 .w6 ~ .a13_clicked > path.arc { stroke: #c00; }
+        .svg5 .w6:hover ~ .a13 > path.arrow { fill: #888; }
+        .svg5 .w6 ~ .a13_clicked > path.arrow { fill: #c00; }
+        .svg5 .w13:hover ~ .w14 > text.big { fill: #c00; }
+        .svg5 .w13 ~ .w14_clicked > text.big { fill: #c00; }
+        .svg5 .w13:hover ~ .w14 > text.small { fill: #800; }
+        .svg5 .w13 ~ .w14_clicked > text.small { fill: #800; }
+        .svg5 .w13:hover ~ .a14 > text.role { fill: #c00; }
+        .svg5 .w13 ~ .a14_clicked > text.role { fill: #c00; }
+        .svg5 .w13:hover ~ .a14 > path.arc { stroke: #c00; }
+        .svg5 .w13 ~ .a14_clicked > path.arc { stroke: #c00; }
+        .svg5 .w13:hover ~ .a14 > path.arrow { fill: #c00; }
+        .svg5 .w13 ~ .a14_clicked > path.arrow { fill: #c00; }
+        .svg5 .w15:hover ~ .w14 > text.big { fill: #888; }
+        .svg5 .w15 ~ .w14_clicked > text.big { fill: #c00; }
+        .svg5 .w15:hover ~ .w14 > text.small { fill: #666; }
+        .svg5 .w15 ~ .w14_clicked > text.small { fill: #800; }
+        .svg5 .w15:hover ~ .a14 > text.role { fill: #888; }
+        .svg5 .w15 ~ .a14_clicked > text.role { fill: #c00; }
+        .svg5 .w15:hover ~ .a14 > path.arc { stroke: #888; }
+        .svg5 .w15 ~ .a14_clicked > path.arc { stroke: #c00; }
+        .svg5 .w15:hover ~ .a14 > path.arrow { fill: #888; }
+        .svg5 .w15 ~ .a14_clicked > path.arrow { fill: #c00; }
+        .svg5 .w6:hover ~ .w14 > text.big { fill: #888; }
+        .svg5 .w6 ~ .w14_clicked > text.big { fill: #c00; }
+        .svg5 .w6:hover ~ .w14 > text.small { fill: #666; }
+        .svg5 .w6 ~ .w14_clicked > text.small { fill: #800; }
+        .svg5 .w6:hover ~ .a14 > text.role { fill: #888; }
+        .svg5 .w6 ~ .a14_clicked > text.role { fill: #c00; }
+        .svg5 .w6:hover ~ .a14 > path.arc { stroke: #888; }
+        .svg5 .w6 ~ .a14_clicked > path.arc { stroke: #c00; }
+        .svg5 .w6:hover ~ .a14 > path.arrow { fill: #888; }
+        .svg5 .w6 ~ .a14_clicked > path.arrow { fill: #c00; }
+        .svg5 .w6:hover ~ .w15 > text.big { fill: #c00; }
+        .svg5 .w6 ~ .w15_clicked > text.big { fill: #c00; }
+        .svg5 .w6:hover ~ .w15 > text.small { fill: #800; }
+        .svg5 .w6 ~ .w15_clicked > text.small { fill: #800; }
+        .svg5 .w6:hover ~ .a15 > text.role { fill: #c00; }
+        .svg5 .w6 ~ .a15_clicked > text.role { fill: #c00; }
+        .svg5 .w6:hover ~ .a15 > path.arc { stroke: #c00; }
+        .svg5 .w6 ~ .a15_clicked > path.arc { stroke: #c00; }
+        .svg5 .w6:hover ~ .a15 > path.arrow { fill: #c00; }
+        .svg5 .w6 ~ .a15_clicked > path.arrow { fill: #c00; }
+        .svg5 .w6:hover ~ .w16 > text.big { fill: #c00; }
+        .svg5 .w6 ~ .w16_clicked > text.big { fill: #c00; }
+        .svg5 .w6:hover ~ .w16 > text.small { fill: #800; }
+        .svg5 .w6 ~ .w16_clicked > text.small { fill: #800; }
+        .svg5 .w6:hover ~ .a16 > text.role { fill: #c00; }
+        .svg5 .w6 ~ .a16_clicked > text.role { fill: #c00; }
+        .svg5 .w6:hover ~ .a16 > path.arc { stroke: #c00; }
+        .svg5 .w6 ~ .a16_clicked > path.arc { stroke: #c00; }
+        .svg5 .w6:hover ~ .a16 > path.arrow { fill: #c00; }
+        .svg5 .w6 ~ .a16_clicked > path.arrow { fill: #c00; }
+      </style>
+
+    <script>
+        let last_used_view = ''
+
+        function reset(title, svg_object_class) {
+            let new_class_name = svg_object_class + '_clicked'
+            let last_used_class_name = last_used_view + '_clicked'
+
+            if (document.getElementById(svg_object_class).classList.contains(new_class_name)) {
+                document.getElementById(svg_object_class).classList.remove(new_class_name);
+            } else {
+                document.getElementById(svg_object_class).classList.add(new_class_name)
+            }
+
+            try {
+              if (last_used_view !== svg_object_class) {
+                document.getElementById(last_used_view).classList.remove(last_used_class_name)
+              }
+            }
+            catch (e) {
+              console.log(e)
+            }
+
+            last_used_view = svg_object_class
+            document.getElementById("subtext").innerHTML = document.getElementById(title).innerHTML;
+        }
+    </script>
+<text x="482.7846096908265" y="140.0" class="big" text-anchor="start" id="subtext"> so instead Posada may be hold in- define -ite -ly , in comfort -able custody .</text>
+      <g class="w6">
+        <rect x="317" y="96" width="48" height="12" class="hid" />
+        <text x="341" y="108" class="big">hold</text>
+      </g>
+      <g id="a6" class="a6" onclick="reset('a6t', 'a6')">
+      <title id="a6t">so instead Posada may be hold in- define -ite -ly , in comfort -able custody .</title>
+        <path d="M 341 96 L 341 24" class="arc" />
+        <path d="M 341 96 L 341 24" class="arc hid" />
+        <path d="M 341.57 97.50L 343.51 90.26L 341.57 91.12L 339.63 90.26Z" class="arrow"/>
+        <text x="341" y="22" class="role">root</text>
+      </g>
+      <g class="w1">
+        <rect x="12" y="96" width="24" height="12" class="hid" />
+        <text x="24" y="108" class="big">so</text>
+      </g>
+      <g id="a1" class="a1" onclick="reset('a1t', 'a1')">
+      <title id="a1t">so</title>
+        <path d="M 24.00 96.00A 120.00 120.00 0 0 1 127.92 36.00L 231.65 36.00A 120.00 120.00 0 0 1 335.57 96.00" class="arc" />
+        <path d="M 24.00 96.00A 120.00 120.00 0 0 1 127.92 36.00L 231.65 36.00A 120.00 120.00 0 0 1 335.57 96.00" class="arc hid" />
+        <path d="M 23.25 97.30L 28.55 92.00L 26.44 91.78L 25.19 90.05Z" class="arrow"/>
+        <text x="179" y="34" class="role">advmod</text>
+      </g>
+      <g class="w2">
+        <rect x="48" y="96" width="84" height="12" class="hid" />
+        <text x="90" y="108" class="big">instead</text>
+      </g>
+      <g id="a2" class="a2" onclick="reset('a2t', 'a2')">
+      <title id="a2t">instead</title>
+        <path d="M 90.00 96.00A 96.00 96.00 0 0 1 173.14 48.00L 252.43 48.00A 96.00 96.00 0 0 1 335.57 96.00" class="arc" />
+        <path d="M 90.00 96.00A 96.00 96.00 0 0 1 173.14 48.00L 252.43 48.00A 96.00 96.00 0 0 1 335.57 96.00" class="arc hid" />
+        <path d="M 89.25 97.30L 94.55 92.00L 92.44 91.78L 91.19 90.05Z" class="arrow"/>
+        <text x="212" y="46" class="role">advmod</text>
+      </g>
+      <g class="w3">
+        <rect x="144" y="96" width="72" height="12" class="hid" />
+        <text x="180" y="108" class="big">Posada</text>
+      </g>
+      <g id="a3" class="a3" onclick="reset('a3t', 'a3')">
+      <title id="a3t">Posada</title>
+        <path d="M 180.00 96.00A 72.00 72.00 0 0 1 242.35 60.00L 273.22 60.00A 72.00 72.00 0 0 1 335.57 96.00" class="arc" />
+        <path d="M 180.00 96.00A 72.00 72.00 0 0 1 242.35 60.00L 273.22 60.00A 72.00 72.00 0 0 1 335.57 96.00" class="arc hid" />
+        <path d="M 179.25 97.30L 184.55 92.00L 182.44 91.78L 181.19 90.05Z" class="arrow"/>
+        <text x="257" y="58" class="role">nsubj:pass</text>
+      </g>
+      <g class="w4">
+        <rect x="228" y="96" width="36" height="12" class="hid" />
+        <text x="246" y="108" class="big">may</text>
+      </g>
+      <g id="a4" class="a4" onclick="reset('a4t', 'a4')">
+      <title id="a4t">may</title>
+        <path d="M 246.00 96.00A 48.00 48.00 0 0 1 287.57 72.00L 294.00 72.00A 48.00 48.00 0 0 1 335.57 96.00" class="arc" />
+        <path d="M 246.00 96.00A 48.00 48.00 0 0 1 287.57 72.00L 294.00 72.00A 48.00 48.00 0 0 1 335.57 96.00" class="arc hid" />
+        <path d="M 245.25 97.30L 250.55 92.00L 248.44 91.78L 247.19 90.05Z" class="arrow"/>
+        <text x="290" y="70" class="role">aux</text>
+      </g>
+      <g class="w5">
+        <rect x="276" y="96" width="24" height="12" class="hid" />
+        <text x="288" y="108" class="big">be</text>
+      </g>
+      <g id="a5" class="a5" onclick="reset('a5t', 'a5')">
+      <title id="a5t">be</title>
+        <path d="M 288.00 96.00A 24.00 24.00 0 0 1 308.78 84.00L 314.78 84.00A 24.00 24.00 0 0 1 335.57 96.00" class="arc" />
+        <path d="M 288.00 96.00A 24.00 24.00 0 0 1 308.78 84.00L 314.78 84.00A 24.00 24.00 0 0 1 335.57 96.00" class="arc hid" />
+        <path d="M 287.25 97.30L 292.55 92.00L 290.44 91.78L 289.19 90.05Z" class="arrow"/>
+        <text x="311" y="82" class="role">aux:pass</text>
+      </g>
+      <g class="w8">
+        <rect x="425" y="96" width="72" height="12" class="hid" />
+        <text x="461" y="108" class="big">define</text>
+      </g>
+      <g id="a8" class="a8" onclick="reset('a8t', 'a8')">
+      <title id="a8t">in- define -ite -ly</title>
+        <path d="M 347.57 96.00A 48.00 48.00 0 0 1 389.14 72.00L 420.00 72.00A 48.00 48.00 0 0 1 461.57 96.00" class="arc" />
+        <path d="M 347.57 96.00A 48.00 48.00 0 0 1 389.14 72.00L 420.00 72.00A 48.00 48.00 0 0 1 461.57 96.00" class="arc hid" />
+        <path d="M 462.32 97.30L 460.38 90.05L 459.13 91.78L 457.02 92.00Z" class="arrow"/>
+        <text x="404" y="70" class="role">advmod</text>
+      </g>
+      <g class="w11">
+        <rect x="617" y="96" width="12" height="12" class="hid" />
+        <text x="623" y="108" class="big">,</text>
+      </g>
+      <g id="a11" class="a11" onclick="reset('a11t', 'a11')">
+      <title id="a11t">,</title>
+        <path d="M 347.57 96.00A 72.00 72.00 0 0 1 409.92 60.00L 561.22 60.00A 72.00 72.00 0 0 1 623.57 96.00" class="arc" />
+        <path d="M 347.57 96.00A 72.00 72.00 0 0 1 409.92 60.00L 561.22 60.00A 72.00 72.00 0 0 1 623.57 96.00" class="arc hid" />
+        <path d="M 624.32 97.30L 622.38 90.05L 621.13 91.78L 619.02 92.00Z" class="arrow"/>
+        <text x="485" y="58" class="role">punct</text>
+      </g>
+      <g class="w15">
+        <rect x="845" y="96" width="84" height="12" class="hid" />
+        <text x="887" y="108" class="big">custody</text>
+      </g>
+      <g id="a15" class="a15" onclick="reset('a15t', 'a15')">
+      <title id="a15t">in comfort -able custody</title>
+        <path d="M 347.57 96.00A 96.00 96.00 0 0 1 430.71 48.00L 804.43 48.00A 96.00 96.00 0 0 1 887.57 96.00" class="arc" />
+        <path d="M 347.57 96.00A 96.00 96.00 0 0 1 430.71 48.00L 804.43 48.00A 96.00 96.00 0 0 1 887.57 96.00" class="arc hid" />
+        <path d="M 888.32 97.30L 886.38 90.05L 885.13 91.78L 883.02 92.00Z" class="arrow"/>
+        <text x="617" y="46" class="role">obl</text>
+      </g>
+      <g class="w16">
+        <rect x="941" y="96" width="12" height="12" class="hid" />
+        <text x="947" y="108" class="big">.</text>
+      </g>
+      <g id="a16" class="a16" onclick="reset('a16t', 'a16')">
+      <title id="a16t">.</title>
+        <path d="M 347.57 96.00A 120.00 120.00 0 0 1 451.49 36.00L 843.65 36.00A 120.00 120.00 0 0 1 947.57 96.00" class="arc" />
+        <path d="M 347.57 96.00A 120.00 120.00 0 0 1 451.49 36.00L 843.65 36.00A 120.00 120.00 0 0 1 947.57 96.00" class="arc hid" />
+        <path d="M 948.32 97.30L 946.38 90.05L 945.13 91.78L 943.02 92.00Z" class="arrow"/>
+        <text x="647" y="34" class="role">punct</text>
+      </g>
+      <g class="w7">
+        <rect x="377" y="96" width="36" height="12" class="hid" />
+        <text x="395" y="108" class="big">in-</text>
+      </g>
+      <g id="a7" class="a7" onclick="reset('a7t', 'a7')">
+      <title id="a7t">in-</title>
+        <path d="M 395.57 96.00A 24.00 24.00 0 0 1 416.35 84.00L 434.78 84.00A 24.00 24.00 0 0 1 455.57 96.00" class="arc" />
+        <path d="M 395.57 96.00A 24.00 24.00 0 0 1 416.35 84.00L 434.78 84.00A 24.00 24.00 0 0 1 455.57 96.00" class="arc hid" />
+        <path d="M 394.82 97.30L 400.12 92.00L 398.01 91.78L 396.76 90.05Z" class="arrow"/>
+        <text x="425" y="82" class="role">affix</text>
+      </g>
+      <g class="w9">
+        <rect x="509" y="96" width="48" height="12" class="hid" />
+        <text x="533" y="108" class="big">-ite</text>
+      </g>
+      <g id="a9" class="a9" onclick="reset('a9t', 'a9')">
+      <title id="a9t">-ite</title>
+        <path d="M 467.57 96.00A 24.00 24.00 0 0 1 488.35 84.00L 512.78 84.00A 24.00 24.00 0 0 1 533.57 96.00" class="arc" />
+        <path d="M 467.57 96.00A 24.00 24.00 0 0 1 488.35 84.00L 512.78 84.00A 24.00 24.00 0 0 1 533.57 96.00" class="arc hid" />
+        <path d="M 534.32 97.30L 532.38 90.05L 531.13 91.78L 529.02 92.00Z" class="arrow"/>
+        <text x="500" y="82" class="role">affix</text>
+      </g>
+      <g class="w10">
+        <rect x="569" y="96" width="36" height="12" class="hid" />
+        <text x="587" y="108" class="big">-ly</text>
+      </g>
+      <g id="a10" class="a10" onclick="reset('a10t', 'a10')">
+      <title id="a10t">-ly</title>
+        <path d="M 467.57 96.00A 48.00 48.00 0 0 1 509.14 72.00L 546.00 72.00A 48.00 48.00 0 0 1 587.57 96.00" class="arc" />
+        <path d="M 467.57 96.00A 48.00 48.00 0 0 1 509.14 72.00L 546.00 72.00A 48.00 48.00 0 0 1 587.57 96.00" class="arc hid" />
+        <path d="M 588.32 97.30L 586.38 90.05L 585.13 91.78L 583.02 92.00Z" class="arrow"/>
+        <text x="527" y="70" class="role">affix</text>
+      </g>
+      <g class="w12">
+        <rect x="641" y="96" width="24" height="12" class="hid" />
+        <text x="653" y="108" class="big">in</text>
+      </g>
+      <g id="a12" class="a12" onclick="reset('a12t', 'a12')">
+      <title id="a12t">in</title>
+        <path d="M 653.57 96.00A 72.00 72.00 0 0 1 715.92 60.00L 819.22 60.00A 72.00 72.00 0 0 1 881.57 96.00" class="arc" />
+        <path d="M 653.57 96.00A 72.00 72.00 0 0 1 715.92 60.00L 819.22 60.00A 72.00 72.00 0 0 1 881.57 96.00" class="arc hid" />
+        <path d="M 652.82 97.30L 658.12 92.00L 656.01 91.78L 654.76 90.05Z" class="arrow"/>
+        <text x="767" y="58" class="role">case</text>
+      </g>
+      <g class="w13">
+        <rect x="677" y="96" width="84" height="12" class="hid" />
+        <text x="719" y="108" class="big">comfort</text>
+      </g>
+      <g id="a13" class="a13" onclick="reset('a13t', 'a13')">
+      <title id="a13t">comfort -able</title>
+        <path d="M 719.57 96.00A 48.00 48.00 0 0 1 761.14 72.00L 840.00 72.00A 48.00 48.00 0 0 1 881.57 96.00" class="arc" />
+        <path d="M 719.57 96.00A 48.00 48.00 0 0 1 761.14 72.00L 840.00 72.00A 48.00 48.00 0 0 1 881.57 96.00" class="arc hid" />
+        <path d="M 718.82 97.30L 724.12 92.00L 722.01 91.78L 720.76 90.05Z" class="arrow"/>
+        <text x="800" y="70" class="role">amod</text>
+      </g>
+      <g class="w14">
+        <rect x="773" y="96" width="60" height="12" class="hid" />
+        <text x="803" y="108" class="big">-able</text>
+      </g>
+      <g id="a14" class="a14" onclick="reset('a14t', 'a14')">
+      <title id="a14t">-able</title>
+        <path d="M 725.57 96.00A 24.00 24.00 0 0 1 746.35 84.00L 782.78 84.00A 24.00 24.00 0 0 1 803.57 96.00" class="arc" />
+        <path d="M 725.57 96.00A 24.00 24.00 0 0 1 746.35 84.00L 782.78 84.00A 24.00 24.00 0 0 1 803.57 96.00" class="arc hid" />
+        <path d="M 804.32 97.30L 802.38 90.05L 801.13 91.78L 799.02 92.00Z" class="arrow"/>
+        <text x="764" y="82" class="role">affix</text>
+      </g>
+    </svg>
+  </body>
+</html>
