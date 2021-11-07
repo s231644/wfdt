@@ -133,7 +133,8 @@ class CONLLUTree:
         lines = text.strip().split("\n")
         tokens = [
             CONLLUToken.from_str(line)
-            for line in lines if not line.startswith("#")
+            for line in lines
+            if (not line.startswith("#") and '-' not in line.split('\t')[0])
         ]
         return cls(tokens)
 

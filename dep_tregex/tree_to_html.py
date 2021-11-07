@@ -275,7 +275,7 @@ def _draw_root_arc(file, x, y, height_in_units, deprel, css_class, hovertext):
             css_class, css_class, css_class + "t", css_class
         )
     )
-    file.write(u'      <title id="%s">%s</title>\n' % (css_class + "t", hovertext))
+    file.write(u'        <title id="%s">%s</title>\n' % (css_class + "t", hovertext))
 
     # Path.
     path = 'M %i %i L %i %i' % (x, y, x, y - height)
@@ -309,7 +309,7 @@ def _draw_arc(file, start_x, end_x, y, height_in_units, deprel, css_class, hover
             css_class, css_class, css_class + "t", css_class
         )
     )
-    file.write(u'      <title id="%s">%s</title>\n' % (css_class + "t", hovertext))
+    file.write(u'        <title id="%s">%s</title>\n' % (css_class + "t", hovertext))
 
     # Path.
     path = (
@@ -482,8 +482,14 @@ def write_tree_html(file, tree, fields=[], highlight_nodes=[], static=False):
         file.write(u'      <style type="text/css">\n')
         for node in range(1, N + 1):
             # Start with head.
-            styles, styles_clicked = _HEAD_HOVER_STYLES, _HEAD_HOVER_STYLES_CLICKED
             head = tree.heads(node)
+            styles, styles_clicked = _HEAD_HOVER_STYLES, _HEAD_HOVER_STYLES_CLICKED
+            if head == 0:
+                # Highlight a node its arc when head's label is hovered over.
+                for style, style_clicked in zip(styles[2:], styles_clicked[2:]):
+                    file.write(u'        .%s .w%i:hover ~ %s\n' % (uid, node, style % node))
+                    file.write(u'        .%s .w%i ~ %s\n' % (uid, node, style_clicked % node))
+
             # Iterate through all parents.
             while head != 0:
                 # Highlight a node its arc when head's label is hovered over.
