@@ -1,6 +1,6 @@
 from copy import deepcopy
 from dataclasses import dataclass
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Union
 
 from dep_tregex.ya_dep import visualize_tree
 
@@ -45,6 +45,26 @@ class CONLLUToken:
     deps: str = "_"
     misc: str = "_"
 
+    def __post_init__(self):
+        self.ihead = int(self.head)
+        self.iidx = int(self.idx)
+
+    def set_head(self, head: Union[str, int]):
+        if isinstance(head, int):
+            self.ihead = head
+            self.head = str(head)
+        else:
+            self.head = head
+            self.ihead = int(head)
+
+    def set_idx(self, idx: Union[str, int]):
+        if isinstance(idx, int):
+            self.iidx = idx
+            self.idx = str(idx)
+        else:
+            self.idx = idx
+            self.iidx = int(idx)
+
     def __str__(self):
         return "\t".join([
             self.idx, self.form, self.lemma, self.upos, self.xpos,
@@ -73,7 +93,7 @@ class CONLLUTree:
             self.root_idx = int(root_idx)
         else:
             for i, token in enumerate(tokens):
-                if token.head == "0":
+                if token.ihead == 0:
                     self.root_idx = i
 
         self.sent_id = sent_id
@@ -100,7 +120,7 @@ class CONLLUTree:
 
         for t in self.tokens:
             tokens.append(t.lemma)
-            if int(t.head) > 0:
+            if t.ihead > 0:
                 edges.append(
                     r"\depedge{%s}{%s}{%s}" % (t.head, t.idx, t.deprel)
                 )
@@ -168,19 +188,20 @@ class Inventory:
         tokens_r = deepcopy(tree_r.tokens)
         l = len(tree_l.tokens)
         for t in tokens_r:
-            t.idx = str(int(t.idx) + l)
-            if int(t.head) > 0:
-                t.head = str(int(t.head) + l)
+            t.set_idx(t.iidx + l)
+            if t.ihead > 0:
+                t.set_head(t.ihead + l)
+
+        l_root_idx = tree_l.root_idx
+        r_root_idx = tree_r.root_idx
         if is_arc_l2r:
-            tokens_r[tree_r.root_idx].head = tokens_l[tree_l.root_idx].idx
-            tokens_r[tree_r.root_idx].deprel = deprel
-            root_idx = tree_l.root_idx
+            tokens_r[r_root_idx].set_head(tokens_l[l_root_idx].iidx)
+            tokens_r[r_root_idx].deprel = deprel
+            root_idx = l_root_idx
         else:
-            tokens_l[tree_l.root_idx].head = str(
-                int(tree_r.tokens[tree_r.root_idx].idx) + l
-            )
-            tokens_l[tree_l.root_idx].deprel = deprel
-            root_idx = tree_r.root_idx + l
+            tokens_l[l_root_idx].set_head(tokens_l[r_root_idx].iidx + l)
+            tokens_l[l_root_idx].deprel = deprel
+            root_idx = r_root_idx + l
         return CONLLUTree(tokens_l + tokens_r, root_idx=root_idx)
 
     def _merge_with_simple_rule(
@@ -266,8 +287,8 @@ class Inventory:
             subword_roots.append(cur_len + subword_tree.root_idx)
             subword_trees.append(subword_tree)
             for subword_token in subword_tree.tokens:
-                subword_token.idx = str(len(united_subword_tokens) + 1)
-                subword_token.head = str(int(subword_token.head) + cur_len)
+                subword_token.set_idx(len(united_subword_tokens) + 1)
+                subword_token.set_head(int(subword_token.head) + cur_len)
                 united_subword_tokens.append(subword_token)
             cur_len += len(subword_tree)
 
@@ -276,14 +297,14 @@ class Inventory:
             renumerated[token.idx] = i + 1
 
         for i, token in enumerate(word_tree.tokens):
-            renum_head = renumerated[token.deps.split(":")[0]]
-            # if token.idx.isdigit():
-            #     renum_head = renumerated[token.head]
-            # else:
-            #     # 33.1	_	_	_	_	_	_	_	3:conj	_
-            #     renum_head = renumerated[token.deps.split(":")[0]]
-            united_subword_tokens[subword_roots[i + 1]].head = str(
-                subword_roots[renum_head] + 1)
-            united_subword_tokens[subword_roots[i + 1]].deprel = token.deprel
+            if token.head.isdigit():
+                head_idx = token.head
+            else:
+                # 33.1	_	_	_	_	_	_	_	3:conj	_
+                head_idx = token.deps.split(":")[0]
+            renum_head = renumerated[head_idx]
+            idx = subword_roots[i + 1]
+            united_subword_tokens[idx].set_head(subword_roots[renum_head] + 1)
+            united_subword_tokens[idx].deprel = token.deprel
 
         return CONLLUTree(united_subword_tokens)
