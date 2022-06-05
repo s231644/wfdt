@@ -1,64 +1,63 @@
 {
   "itfx.3": {
-    "rule_id": "ruleINTERFIX(num)",
+    "rule_id": "ruleINTERFIX(NUM)",
     "short_id": "INTERFIX",
     "info": "INTERFIX",
-    "pos_b": "num",
-    "pos_a": "num"
+    "pos_b": "NUM",
+    "pos_a": "NUM"
   },
   "619.1": {
-    "rule_id": "rule619(noun + н1(ый) -> adj)",
+    "rule_id": "rule619(NOUN + н1(ый) -> ADJ)",
     "short_id": "-н1-",
     "info": "SFX",
-    "pos_b": "noun",
-    "pos_a": "adj"
+    "pos_b": "NOUN",
+    "pos_a": "ADJ"
   },
   "619.2": {
-    "rule_id": "rule619*(noun + н1(ый) -> adj)",
+    "rule_id": "rule619*(NOUN + н1(ый) -> ADJ)",
     "short_id": "-н1-",
     "info": "SFX",
-    "pos_b": "noun",
-    "pos_a": "adj"
+    "pos_b": "NOUN",
+    "pos_a": "ADJ"
   },
   "687": {
-    "rule_id": "rule687(вне + adj -> adj)",
+    "rule_id": "rule687(вне + ADJ -> ADJ)",
     "short_id": "вне-",
     "info": "PFX",
-    "pos_b": "adj",
-    "pos_a": "adj"
+    "pos_b": "ADJ",
+    "pos_a": "ADJ"
   },
   "724": {
-    "rule_id": "rule724(вне + noun + н1(ый) -> adj)",
+    "rule_id": "rule724(вне + NOUN + н1(ый) -> ADJ)",
     "info": "PFX,SFX",
-    "pos_b": "noun",
-    "pos_a": "adj",
+    "pos_b": "NOUN",
+    "pos_a": "ADJ",
     "complex": [
-      "rule619*(noun + н1(ый) -> adj)",
-      "rule687(вне + adj -> adj)"
+      "rule619*(NOUN + н1(ый) -> ADJ)",
+      "rule687(вне + ADJ -> ADJ)"
     ]
   },
-  "754.3":
-  {
-    "rule_id": "rule754([num + ITFX] + adj -> adj)",
+  "754.3": {
+    "rule_id": "rule754([NUM + ITFX] + ADJ -> ADJ)",
     "info": "COMPOUND",
-    "pos_b": "adj",
-    "pos_a": "adj",
+    "pos_b": "ADJ",
+    "pos_a": "ADJ",
     "compound_rules": {
       "head": [],
-      "modifiers": [{"pos_m": "num", "complex": ["ruleINTERFIX(num)"]}],
+      "modifiers": [{"pos_m": "NUM", "complex": ["ruleINTERFIX(NUM)"]}],
       "order": [1, 0],
       "before_merge": [],
       "after_merge": []
     }
   },
   "761.3": {
-    "rule_id": "rule761([num + ITFX] + noun + н1(ый) -> adj)",
+    "rule_id": "rule761([NUM + ITFX] + NOUN + н1(ый) -> ADJ)",
     "info": "COMPOUND,SFX",
-    "pos_b": "noun",
-    "pos_a": "adj",
+    "pos_b": "NOUN",
+    "pos_a": "ADJ",
     "compound_rules": {
-      "head": ["rule619*(noun + н1(ый) -> adj)"],
-      "modifiers": [{"pos_m": "num", "complex": ["ruleINTERFIX(num)"]}],
+      "head": ["rule619*(NOUN + н1(ый) -> ADJ)"],
+      "modifiers": [{"pos_m": "NUM", "complex": ["ruleINTERFIX(NUM)"]}],
       "order": [1, 0],
       "before_merge": [],
       "after_merge": []

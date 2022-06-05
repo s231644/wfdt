@@ -7,8 +7,43 @@ from src import CONLLUToken, CONLLUTree
 
 
 class RulesReader:
-    def read_rules(self, path: str) -> Dict[RuleInfo]:
-        pass
+    def read_rules(self, path: str) -> Dict[str, RuleInfo]:
+        with open(path, "r") as f:
+            data = json.load(f)
+
+        db_id_to_wfdt_rule_id = {}
+
+        rules = {}
+        for wfdt_rule_id, rule_dict in data.items():
+            db_id = rule_dict["rule_id"]
+            db_id_to_wfdt_rule_id[db_id] = wfdt_rule_id
+
+            info = rule_dict["info"]
+            pos_b = rule_dict["pos_b"]
+            pos_a = rule_dict["pos_a"]
+
+            compound_rules = rule_dict.get("compound_rules", None)
+            complex = rule_dict.get("complex", None)
+            if compound_rules:
+                ms_dicts = compound_rules["modifiers"]
+                modifier_rules = [ms["complex"] for ms in ms_dicts]
+                rule = CompoundRuleInfo(
+                    db_id, info, pos_b, pos_a,
+                    head_rules=compound_rules["head"],
+                    modifier_rules=modifier_rules,
+                    after_rules=compound_rules.get("after_merge")
+                )
+            elif complex:
+                subrules = [
+                    rules[db_id_to_wfdt_rule_id[subrule_db_id]]
+                    for subrule_db_id in complex
+                ]
+                rule = ComplexRuleInfo(db_id, info, pos_b, pos_a, subrules)
+            else:
+                short_id = rule_dict["short_id"]
+                rule = RuleInfo(short_id, info, pos_b, pos_a)
+            rules[wfdt_rule_id] = rule
+        return rules
 
 
 class ReaderAbstract(ABC):
@@ -243,3 +278,36 @@ class CharDepsReader(ReaderAbstract):
 # reader = CharDepsReader()
 # results = reader.read_dataset("../data/Chinese/chinesechardeps/sample.txt")
 # print(results)
+
+
+# German example
+# german_data = {
+#     **ReaderUDer().read_dataset(
+#         "../data/German/derivbase-uder/sample.txt"
+#     ),
+#     **ReaderGermaNet(n_lines_skip=2).read_dataset(
+#         "../data/German/germanet/sample.txt"
+#     ),
+# }
+# german_rules = RulesReader().read_rules(
+#     "../data/German/rules_sample.json"
+# )
+# german_inventory = Inventory(
+#     rules_by_ids=german_rules,
+#     word_analyses=german_data
+# )
+# german_inventory.make_subword_tree(
+#     "Olympiamedaillengewinner"
+# ).html("Olympiamedaillengewinner.html")
+
+
+# Chinese example
+# chinese_data = CharDepsReader().read_dataset(
+#     "../data/Chinese/chinesechardeps/sample.txt"
+# )
+# chinese_inventory = Inventory(
+#     word_trees=chinese_data
+# )
+# chinese_inventory.make_subword_tree(
+#     "聆听已久"
+# ).html("聆听已久.html")

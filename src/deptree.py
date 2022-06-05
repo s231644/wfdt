@@ -20,6 +20,7 @@ class RuleInfo:
     pos_b: str
     pos_a: str
 
+
 @dataclass
 class ComplexRuleInfo(RuleInfo):
     simple_rules: List[RuleInfo]
@@ -177,7 +178,7 @@ class Inventory:
     ):
         self.rules_by_ids = rules_by_ids or {}
         self.word_analyses = word_analyses or {}
-        self.word_trees = word_trees
+        self.word_trees = word_trees or {}
 
     @staticmethod
     def _merge_trees(
@@ -201,7 +202,7 @@ class Inventory:
             tokens_r[r_root_idx].deprel = deprel
             root_idx = l_root_idx
         else:
-            tokens_l[l_root_idx].set_head(tokens_l[r_root_idx].iidx + l)
+            tokens_l[l_root_idx].set_head(tokens_r[r_root_idx].iidx)
             tokens_l[l_root_idx].deprel = deprel
             root_idx = r_root_idx + l
         return CONLLUTree(tokens_l + tokens_r, root_idx=root_idx)
