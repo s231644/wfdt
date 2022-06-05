@@ -1,0 +1,23 @@
+{
+  "dVN03": {
+    "rule_id": "dVN03(verb + er -> noun)",
+    "short_id": "-er",
+    "info": "SFX",
+    "pos_b": "verb",
+    "pos_a": "noun"
+  },
+  "dVN10": {
+    "rule_id": "dVN10(verb + 0 -> noun)",
+    "short_id": "-en>0",
+    "info": "SFX",
+    "pos_b": "verb",
+    "pos_a": "noun"
+  },
+  "dNN47": {
+    "rule_id": "dNN47(haupt + noun -> noun)",
+    "short_id": "haupt-",
+    "info": "PFX",
+    "pos_b": "noun",
+    "pos_a": "noun"
+  }
+}

@@ -1,0 +1,4 @@
+1144.0	комнатный#ADJ	комнатный	ADJ						{}
+1144.1	пятикомнатный#ADJ	пятикомнатный	ADJ			1144.0	Rule=754&Sources=1144.0,2254.0&Type=Compounding		{"dataset": "test"}
+
+2254.0	пять#NUM	пять	NUM						{}

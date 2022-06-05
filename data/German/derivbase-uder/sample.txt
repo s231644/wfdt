@@ -1,0 +1,4 @@
+220654.0	gewinnen#VERB	gewinnen	VERB						{"other_parents": "220654.3&Rule=dNV09|220654.1&Rule=dNV09"}
+220654.1	Gewinn#NOUN#Masc	Gewinn	NOUN	Gender=Masc		220654.0	Rule=dVN10&Type=Derivation		{}
+220654.2	Hauptgewinn#NOUN#Masc	Hauptgewinn	NOUN	Gender=Masc		220654.1	Rule=dNN47&Type=Derivation		{}
+220654.4	Gewinner#NOUN#Masc	Gewinner	NOUN	Gender=Masc		220654.0	Rule=dVN03&Type=Derivation		{"other_parents": "220654.3&Rule=dNN05|220654.1&Rule=dNN05"}

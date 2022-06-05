@@ -1,0 +1,6 @@
+compound	modifier1(|modifier2)	head
+********	*********************	****
+4x100-Meter-Staffel	4 x 100 Meter	Staffel
+Abwehrchef	Abwehr|abwehren	Chef
+Olympiamedaille	Olympia	Medaille
+Olympiamedaillengewinner	Olympiamedaille	Gewinner

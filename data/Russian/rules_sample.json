@@ -1,0 +1,67 @@
+{
+  "itfx.3": {
+    "rule_id": "ruleINTERFIX(num)",
+    "short_id": "INTERFIX",
+    "info": "INTERFIX",
+    "pos_b": "num",
+    "pos_a": "num"
+  },
+  "619.1": {
+    "rule_id": "rule619(noun + н1(ый) -> adj)",
+    "short_id": "-н1-",
+    "info": "SFX",
+    "pos_b": "noun",
+    "pos_a": "adj"
+  },
+  "619.2": {
+    "rule_id": "rule619*(noun + н1(ый) -> adj)",
+    "short_id": "-н1-",
+    "info": "SFX",
+    "pos_b": "noun",
+    "pos_a": "adj"
+  },
+  "687": {
+    "rule_id": "rule687(вне + adj -> adj)",
+    "short_id": "вне-",
+    "info": "PFX",
+    "pos_b": "adj",
+    "pos_a": "adj"
+  },
+  "724": {
+    "rule_id": "rule724(вне + noun + н1(ый) -> adj)",
+    "info": "PFX,SFX",
+    "pos_b": "noun",
+    "pos_a": "adj",
+    "complex": [
+      "rule619*(noun + н1(ый) -> adj)",
+      "rule687(вне + adj -> adj)"
+    ]
+  },
+  "754.3":
+  {
+    "rule_id": "rule754([num + ITFX] + adj -> adj)",
+    "info": "COMPOUND",
+    "pos_b": "adj",
+    "pos_a": "adj",
+    "compound_rules": {
+      "head": [],
+      "modifiers": [{"pos_m": "num", "complex": ["ruleINTERFIX(num)"]}],
+      "order": [1, 0],
+      "before_merge": [],
+      "after_merge": []
+    }
+  },
+  "761.3": {
+    "rule_id": "rule761([num + ITFX] + noun + н1(ый) -> adj)",
+    "info": "COMPOUND,SFX",
+    "pos_b": "noun",
+    "pos_a": "adj",
+    "compound_rules": {
+      "head": ["rule619*(noun + н1(ый) -> adj)"],
+      "modifiers": [{"pos_m": "num", "complex": ["ruleINTERFIX(num)"]}],
+      "order": [1, 0],
+      "before_merge": [],
+      "after_merge": []
+    }
+  }
+}

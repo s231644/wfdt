@@ -1,0 +1,11 @@
+[ 47332]	index	char	pos	head-index	dp-label
+	1	聆	v	2	vv
+	2	听	v	4	a-v-a
+	3	已	d	4	a-d-a
+	4	久	a	0	root-a
+
+[ 80362]	index	char	pos	head-index	dp-label
+	1	热	a	2	ad
+	2	情	n	4	v-n-v
+	3	洋	v	4	vc
+	4	溢	v	0	root-n

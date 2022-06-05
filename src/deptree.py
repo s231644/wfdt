@@ -171,11 +171,13 @@ class CONLLUTree:
 class Inventory:
     def __init__(
             self,
-            word_analyses: Dict[str, WFToken],
-            rules_by_ids: Dict[str, RuleInfo]
+            rules_by_ids: Optional[Dict[str, RuleInfo]] = None,
+            word_analyses: Optional[Dict[str, WFToken]] = None,
+            word_trees: Optional[Dict[str, CONLLUTree]] = None
     ):
-        self.word_analyses = word_analyses
-        self.rules_by_ids = rules_by_ids
+        self.rules_by_ids = rules_by_ids or {}
+        self.word_analyses = word_analyses or {}
+        self.word_trees = word_trees
 
     @staticmethod
     def _merge_trees(
@@ -234,6 +236,8 @@ class Inventory:
         return tree
 
     def make_subword_tree(self, word: str) -> CONLLUTree:
+        if word in self.word_trees:
+            return self.word_trees[word]
         if word not in self.word_analyses:
             return CONLLUTree([CONLLUToken("1", word, word)])
         wf_token = self.word_analyses[word]
