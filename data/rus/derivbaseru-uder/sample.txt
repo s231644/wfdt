@@ -1,0 +1,2 @@
+80074.0	комната#NOUN	комната	NOUN						{"other_parents": "80074.4&Rule=461&Process=0SFX"}
+80074.4	комнатный#ADJ	комнатный	ADJ			80074.0	Process=SFX&Rule=619.1&Type=Derivation		{"other_parents": "80074.3&Rule=619&Process=SFX"}

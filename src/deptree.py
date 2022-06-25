@@ -5,15 +5,23 @@ from typing import Dict, List, Optional, Union
 from dep_tregex.ya_dep import visualize_tree
 
 
-@dataclass
+@dataclass(frozen=True)
+class LexItem:
+    lemma: str
+    lid: Optional[str] = None
+    form: Optional[str] = None
+    upos: str = "_"
+    xpos: str = "_"
+
+
+@dataclass(frozen=True)
 class WFToken:
-    d_lemma: str
-    d_upos: str
-    rule_id: str
-    d_modifiers: Optional[List[str]] = None
+    d_from: LexItem
+    rule_id: Optional[str] = None
+    d_modifiers: Optional[List[LexItem]] = None
 
 
-@dataclass
+@dataclass(frozen=True)
 class RuleInfo:
     short_id: str
     info: str
@@ -21,16 +29,17 @@ class RuleInfo:
     pos_a: str
 
 
-@dataclass
+@dataclass(frozen=True)
 class ComplexRuleInfo(RuleInfo):
     simple_rules: List[RuleInfo]
 
 
-@dataclass
+@dataclass(frozen=True)
 class CompoundRuleInfo(RuleInfo):
     head_rules: Optional[List[RuleInfo]] = None
     modifier_rules: Optional[List[List[RuleInfo]]] = None
     after_rules: Optional[List[RuleInfo]] = None
+    heads: Optional[List[int]] = None
 
 
 @dataclass
@@ -173,12 +182,14 @@ class Inventory:
     def __init__(
             self,
             rules_by_ids: Optional[Dict[str, RuleInfo]] = None,
-            word_analyses: Optional[Dict[str, WFToken]] = None,
-            word_trees: Optional[Dict[str, CONLLUTree]] = None
+            word_analyses: Optional[Dict[LexItem, WFToken]] = None,
+            word_trees: Optional[Dict[LexItem, CONLLUTree]] = None,
+            bracketing_strategy: str = "last",
     ):
-        self.rules_by_ids = rules_by_ids or {}
+        self.rules_by_ids: Dict[str, RuleInfo] = rules_by_ids or {}
         self.word_analyses = word_analyses or {}
         self.word_trees = word_trees or {}
+        self.modifiers_strategy = bracketing_strategy
 
     @staticmethod
     def _merge_trees(
@@ -213,22 +224,45 @@ class Inventory:
             rule: RuleInfo
     ) -> CONLLUTree:
         affix_tree = CONLLUTree(
-            [CONLLUToken("1", rule.short_id, rule.short_id)])
+            [
+                CONLLUToken(
+                    idx="1",
+                    form=rule.short_id,
+                    lemma=rule.short_id,
+                    upos=rule.pos_a,
+                )
+            ]
+        )
         if rule.info == "SFX":
+            # derivational suffix
             tree = self._merge_trees(
                 stem_tree, affix_tree, deprel="affix", is_arc_l2r=True
             )
         elif rule.info == "PTFX":
+            # postfix, e. g. Russian -ся/-сь
             tree = self._merge_trees(
                 stem_tree, affix_tree, deprel="refl", is_arc_l2r=True
             )
         elif rule.info == "PFX":
+            # derivational prefix
             tree = self._merge_trees(
                 affix_tree, stem_tree, deprel="affix", is_arc_l2r=False
             )
         elif rule.info == "CONV":
+            # conversion
             tree = self._merge_trees(
                 stem_tree, affix_tree, deprel="conv", is_arc_l2r=True
+            )
+        elif rule.info == "INTERFIX":
+            # inflectional interfix: Russ[-ia] + (o) + phobia
+            # TODO: handle inflection
+            tree = self._merge_trees(
+                stem_tree, affix_tree, deprel="infl", is_arc_l2r=True
+            )
+        elif rule.info == "INFL":
+            # TODO: handle inflection
+            tree = self._merge_trees(
+                stem_tree, affix_tree, deprel="infl", is_arc_l2r=True
             )
         else:
             raise AssertionError(
@@ -236,30 +270,106 @@ class Inventory:
             )
         return tree
 
-    def make_subword_tree(self, word: str) -> CONLLUTree:
-        if word in self.word_trees:
-            return self.word_trees[word]
-        if word not in self.word_analyses:
-            return CONLLUTree([CONLLUToken("1", word, word)])
-        wf_token = self.word_analyses[word]
-        stem_tree = self.make_subword_tree(wf_token.d_lemma)
-        rule = self.rules_by_ids[wf_token.rule_id]
+    def _make_modifiers_tree(
+            self,
+            stem_tree: CONLLUTree,
+            modifiers: List[LexItem],
+            modifier_rules: Optional[List[List[str]]] = None,
+    ):
+        if not modifiers:
+            return stem_tree
 
-        if isinstance(rule, CompoundRuleInfo):
-            # applying modifier rules, e. g. interfixation
-            modifiers_trees = []
-            for m, m_rules in zip(
-                    wf_token.d_modifiers or [], rule.modifier_rules or []
-            ):
-                m_tree = self.make_subword_tree(m)
-                for m_rule in m_rules:
-                    m_tree = self._merge_with_simple_rule(m_tree, m_rule)
-                modifiers_trees.append(m_tree)
-            # (pfx (m1 (m2 h)) sfx))
+        if not modifier_rules:
+            modifier_rules = [[]] * len(modifiers)
+
+        assert len(modifiers) == len(modifier_rules)
+
+        modifiers_trees = []
+        for m, m_rules in zip(modifiers, modifier_rules):
+            m_tree = self.make_subword_tree(m)
+            for m_rule in m_rules:
+                m_tree = self._merge_with_simple_rule(m_tree, m_rule)
+            modifiers_trees.append(m_tree)
+
+        # handle dependency relations between modifiers
+        if self.modifiers_strategy == "head":
+            # (m1 (m2 (m3 h)))
             for modifier_tree in reversed(modifiers_trees):
                 stem_tree = self._merge_trees(
                     modifier_tree, stem_tree, "compound", is_arc_l2r=False
                 )
+        elif self.modifiers_strategy == "last":
+            # ((m1 (m2 m3)) h)
+            modifiers_tree = modifiers_trees[-1]
+            for modifier_tree in reversed(modifiers_trees[:-1]):
+                modifiers_tree = self._merge_trees(
+                    modifier_tree, modifiers_tree,
+                    "compound", is_arc_l2r=False
+                )
+            stem_tree = self._merge_trees(
+                modifiers_tree, stem_tree, "compound", is_arc_l2r=False
+            )
+        elif self.modifiers_strategy == "chain":
+            # (((m1 m2) m3) h)
+            modifiers_tree = modifiers_trees[0]
+            for modifier_tree in modifiers_trees[1:]:
+                modifiers_tree = self._merge_trees(
+                    modifiers_tree, modifier_tree,
+                    "compound", is_arc_l2r=False
+                )
+            stem_tree = self._merge_trees(
+                modifiers_tree, stem_tree, "compound", is_arc_l2r=False
+            )
+        else:
+            raise ValueError(
+                f"Unsupported modifiers roots "
+                f"resolving strategy {self.modifiers_strategy}!"
+            )
+
+        return stem_tree
+
+    def make_subword_tree(self, word: LexItem) -> CONLLUTree:
+        if word in self.word_trees:
+            return self.word_trees[word]
+        if word not in self.word_analyses:
+            return CONLLUTree(
+                [
+                    CONLLUToken(
+                        idx="1",
+                        form=word.form,
+                        lemma=word.lemma,
+                        upos=word.upos,
+                        xpos=word.xpos
+                    )
+                ]
+            )
+        wf_token = self.word_analyses[word]
+        stem_tree = self.make_subword_tree(wf_token.d_from)
+
+        rule = self.rules_by_ids.get(wf_token.rule_id, None)
+
+        if rule is None:
+            # unknown rule; default handling for pure compounds and affixes
+            if wf_token.d_modifiers is not None:
+                # compound without a rule, pure compounds only!
+                # 3-Zimmer-Wohnung
+                stem_tree = self._make_modifiers_tree(
+                    stem_tree=stem_tree,
+                    modifiers=wf_token.d_modifiers
+                )
+                return stem_tree
+            else:
+                raise ValueError(
+                    f"No rule is provided for {word} <- {wf_token}!"
+                )
+
+        if isinstance(rule, CompoundRuleInfo):
+            # applying modifier rules, e. g. interfixation
+            stem_tree = self._make_modifiers_tree(
+                stem_tree=stem_tree,
+                modifiers=wf_token.d_modifiers or [],
+                modifier_rules=rule.modifier_rules or []
+            )
             for r in rule.head_rules or []:
                 stem_tree = self._merge_with_simple_rule(stem_tree, r)
             for r in rule.after_rules or []:  # e. g. prefix
@@ -288,7 +398,12 @@ class Inventory:
         cur_len = 0
         united_subword_tokens = []
         for token in word_tree.tokens:
-            subword_tree = self.make_subword_tree(token.lemma)
+            token_lex = LexItem(
+                lemma=token.lemma,
+                form=token.form,
+                upos=token.upos,
+            )
+            subword_tree = self.make_subword_tree(token_lex)
             subword_roots.append(cur_len + subword_tree.root_idx)
             subword_trees.append(subword_tree)
             for subword_token in subword_tree.tokens:

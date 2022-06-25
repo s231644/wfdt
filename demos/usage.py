@@ -1,4 +1,8 @@
-from src import WFToken, RuleInfo, ComplexRuleInfo, CompoundRuleInfo, Inventory
+from src import (
+    LexItem, WFToken,
+    RuleInfo, ComplexRuleInfo, CompoundRuleInfo,
+    Inventory
+)
 
 rules_by_ids = {
     "-able": RuleInfo("-able", "SFX", "NOUN", "ADJ"),
@@ -13,12 +17,58 @@ rules_by_ids = {
     ),
 }
 
+lexicon = {
+    'comfort': LexItem(
+        lemma='comfort', form='comfort', upos='NOUN'
+    ),
+    'comfortable': LexItem(
+        lemma='comfortable', form='comfortable', upos='ADJ'
+    ),
+    'define': LexItem(
+        lemma='define', form='define', upos='VERB'
+    ),
+    'definite': LexItem(
+        lemma='definite', form='definite', upos='ADJ'
+    ),
+    'indefinite': LexItem(
+        lemma='indefinite', form='indefinite', upos='ADJ'
+    ),
+    'indefinitely': LexItem(
+        lemma='indefinitely', form='indefinitely', upos='ADV'
+    ),
+    'eye': LexItem(
+        lemma='eye', form='eye', upos='NOUN'
+    ),
+    'green': LexItem(
+        lemma='green', form='green', upos='ADJ'
+    ),
+    'green-eyed': LexItem(
+        lemma='green-eyed', form='green-eyed', upos='ADJ'
+    ),
+}
+
 word_analyses = {
-    'comfortable': WFToken('comfort', 'NOUN', '-able'),
-    'definite': WFToken('define', 'VERB', '-ite'),
-    'indefinite': WFToken('definite', 'ADJ', 'in-'),
-    'indefinitely': WFToken('indefinite', 'ADJ', '-ly'),
-    'green-eyed': WFToken('eye', 'NOUN', "ADJ + NOUN + -ed -> ADJ", ['green'])
+    lexicon['comfortable']: WFToken(
+        d_from=lexicon['comfort'],
+        rule_id='-able',
+    ),
+    lexicon['definite']: WFToken(
+        d_from=lexicon['define'],
+        rule_id='-ite',
+    ),
+    lexicon['indefinite']: WFToken(
+        d_from=lexicon['definite'],
+        rule_id='in-',
+    ),
+    lexicon['indefinitely']: WFToken(
+        d_from=lexicon['indefinite'],
+        rule_id='-ly',
+    ),
+    lexicon['green-eyed']: WFToken(
+        d_from=lexicon['eye'],
+        rule_id="ADJ + NOUN + -ed -> ADJ",
+        d_modifiers=[lexicon['green']]
+    )
 }
 
 inventory = Inventory(
@@ -28,7 +78,7 @@ inventory = Inventory(
 
 for word in word_analyses:
     subword_tree = inventory.make_subword_tree(word)
-    subword_tree.html(fpath=f"tree_{word}.html")
+    subword_tree.html(fpath=f"tree_{word.lemma}_{word.upos}.html")
 
 ud_sentence = """
 # sent_id = weblog-blogspot.com_rigorousintuition_20050518101500_ENG_20050518_101500-0028

@@ -1,0 +1,13 @@
+rid	graph_1	graph_2	cat_1	cat_2	type_cstr_1	cstr_1	type_cstr_2	cstr_2	complexite	orientation
+r61927	renflammer	enflammer	V	V	pre	reX	NA	X	simple	des2as
+r51619	inflammatoire	enflammer	Adj	V	suf	Xoire	NA	X	simple	des2as
+r16915	inflammation	enflammer	Nf	V	suf	Xion	NA	X	simple	des2as
+r25595	Flammounette	flamme	Npx	Nf	suf	Xounette	NA	X	simple	des2as
+r13534	flammelette	flamme	Nf	Nf	suf	Xelette	NA	X	simple	des2as
+r48322	flammé	flamme	Adj	Nf	suf	Xé	NA	X	simple	des2as
+r13533	flammage	flammer	Nm	V	suf	Xage	NA	X	simple	des2as
+r11828	enflammer	flamme	V	Nf	pre	enX	NA	X	simple	des2as
+r11827	enflammement	enflammer	Nm	V	suf	Xment	NA	X	simple	des2as
+r11826	enflammation	enflammer	Nf	V	suf	Xion	NA	X	simple	des2as
+r116	anti-inflammatoire	inflammatoire	Adj	Adj	pre	antiX	NA	X	motiv-form	des2as
+r117	anti-inflammatoire	anti-inflammatoire	Nm	Adj	conv	X	NA	X	simple	des2as

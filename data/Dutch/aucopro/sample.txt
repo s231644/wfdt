@@ -1,2 +1,0 @@
-temperatuur + opneming
-temperatuur _ s + verandering

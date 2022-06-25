@@ -127,3 +127,13 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Original data sources
+
+/data/afr/aucopro/List.AUCOPRO.AfrikaansSplitting.txt
+/data/nld/aucopro/List.AUCOPRO.DutchSplitting.txt
+/data/zho/chinesechardeps/anno_20120519_45000.txt
+/data/zho/chinesechardeps/anno_20120519_45000_utf8.txt
+/data/deu/germanet/split_compounds_from_GermaNet17.0.txt
+/data/fra/demonext/relations.csv
+/data_readers/examples/
