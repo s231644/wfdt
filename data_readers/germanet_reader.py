@@ -9,8 +9,20 @@ from data_readers.abstract_readers import AnalysesReaderAbstract
 
 
 class GermaNetReader(AnalysesReaderAbstract):
-    def __init__(self, n_lines_skip: int = 2):
-        super().__init__()
+    """
+    Reader for GermaNet.
+
+    compound	modifier1(|modifier2)	head
+    ********	*********************	****
+    4x100-Meter-Staffel	4 x 100 Meter	Staffel
+    Abwehrchef	Abwehr|abwehren	Chef
+    Olympiamedaille	Olympia	Medaille
+    Olympiamedaillengewinner	Olympiamedaille	Gewinner
+
+    https://uni-tuebingen.de/fakultaeten/philosophische-fakultaet/fachbereiche/neuphilologie/seminar-fuer-sprachwissenschaft/arbeitsbereiche/allg-sprachwissenschaft-computerlinguistik/ressourcen/lexica/germanet-1/
+    """
+    def __init__(self, lang: str, n_lines_skip: int = 2, **kwargs):
+        super().__init__(lang, **kwargs)
         self.n_lines_skip = n_lines_skip
 
         self.interfix_rules = {
@@ -75,8 +87,10 @@ class GermaNetReader(AnalysesReaderAbstract):
         return "NOUN"  # TODO: "_"
 
     def build_inventory(
-            self, path: str,
-            bracketing_strategy: str = "last"
+            self,
+            path: str,
+            bracketing_strategy: str = "last",
+            **kwargs
     ) -> Inventory:
 
         compound_analyses = self.read_dataset(path)
@@ -149,6 +163,7 @@ class GermaNetReader(AnalysesReaderAbstract):
                     continue
                 surface_form = derived_lemma[idx:cur_end]
                 subword = LexItem(
+                    lang=self.lang,
                     lemma=lemma,
                     form=surface_form,
                     upos=pos
@@ -168,6 +183,7 @@ class GermaNetReader(AnalysesReaderAbstract):
                     rule_id = f"INTREFIX({pos})(_)"
                 interfixed_analysis = WFToken(
                     d_from=LexItem(
+                        lang=self.lang,
                         lemma=lemma,
                         form=lemma,
                         upos=pos
@@ -175,6 +191,7 @@ class GermaNetReader(AnalysesReaderAbstract):
                     rule_id=rule_id
                 )
                 form_lex = LexItem(
+                    lang=self.lang,
                     lemma=lemma,
                     form=surface_form,
                     upos=pos
@@ -187,6 +204,7 @@ class GermaNetReader(AnalysesReaderAbstract):
 
         subwords.append(
             LexItem(
+                lang=self.lang,
                 lemma=head_lemma,
                 form=head_lemma,
                 upos=d_upos
@@ -194,6 +212,7 @@ class GermaNetReader(AnalysesReaderAbstract):
         )
 
         word = LexItem(
+            lang=self.lang,
             lemma=derived_lemma,
             form=derived_lemma,
             upos=d_upos
@@ -211,23 +230,18 @@ class GermaNetReader(AnalysesReaderAbstract):
 
 # German example
 
-# inventory = GermaNetReader(n_lines_skip=2).build_inventory(
+# inventory = GermaNetReader(lang="deu", n_lines_skip=2).build_inventory(
 #     "../data/deu/germanet/sample.txt"
 #     # "../data/deu/germanet/split_compounds_from_GermaNet17.0.txt"
 # )
-
+#
 # query = LexItem(
-#     lemma='Olympiamedaillengewinner',
-#     form='Olympiamedaillengewinner',
-#     upos='NOUN',
+#     lang="deu",
+#     lemma="Olympiamedaillengewinner",
+#     form="Olympiamedaillengewinner",
+#     upos="NOUN",
 # )
-
-# query = LexItem(
-#     lemma='Autobahnanschlussstelle',
-#     form='Autobahnanschlussstelle',
-#     upos='NOUN',
-# )
-
+#
 # inventory.make_subword_tree(
 #     query
-# ).html(f"examples/{query.lemma}_{query.upos}.html")
+# ).html(f"examples/{query.lang}_{query.lemma}_{query.upos}.html")

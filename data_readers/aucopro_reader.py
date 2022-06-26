@@ -9,20 +9,30 @@ from data_readers.abstract_readers import AnalysesReaderAbstract
 
 
 class AuCoProReader(AnalysesReaderAbstract):
-    def __init__(self, lang: str, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    """
+    Reader for the AuCoPro datasets.
 
-        self.lang = lang
-        if lang == "afr":
+    woord _ e + skat
+    woord _ e + skat + items
+
+    temperatuur + opneming
+    temperatuur _ s + verandering
+
+    https://gerhard.pro/research-projects/aucopro/
+    """
+    def __init__(self, lang: str, *args, **kwargs):
+        super().__init__(lang, *args, **kwargs)
+
+        if self.lang == "afr":
             self.interfixes = [
                 'e', 'er', 'ere', 'ens', 'n', 'ns', 's'
             ]
-        elif lang == "nld":
+        elif self.lang == "nld":
             self.interfixes = [
                 'e', 'en', 'ën', 'n', 's'
             ]
         else:
-            raise ValueError(f"Incorrect language {lang}!")
+            raise ValueError(f"Incorrect language {self.lang}!")
 
         self.interfix_rules = {
             f"INTERFIX({upos})(-{c})": RuleInfo(
@@ -34,8 +44,10 @@ class AuCoProReader(AnalysesReaderAbstract):
         }
 
     def build_inventory(
-            self, path: str,
-            bracketing_strategy: str = "last"
+            self,
+            path: str,
+            bracketing_strategy: str = "last",
+            **kwargs
     ) -> Inventory:
 
         compound_analyses = self.read_dataset(path)
@@ -75,6 +87,7 @@ class AuCoProReader(AnalysesReaderAbstract):
             upos = d_upos if i == len(compound_items) - 1 else "_"
 
             subword = LexItem(
+                lang=self.lang,
                 lemma=lemma,
                 form=form,
                 upos=upos
@@ -94,6 +107,7 @@ class AuCoProReader(AnalysesReaderAbstract):
 
             interfixed_analysis = WFToken(
                 d_from=LexItem(
+                    lang=self.lang,
                     lemma=lemma,
                     form=lemma,
                     upos=upos
@@ -101,13 +115,15 @@ class AuCoProReader(AnalysesReaderAbstract):
                 rule_id=f"INTERFIX({upos})(-{interfix_form})"
             )
             form_lex = LexItem(
+                lang=self.lang,
                 lemma=lemma,
                 form=form,
-                upos=upos
+                upos=upos,
             )
             result.append((form_lex, interfixed_analysis))
 
         word = LexItem(
+            lang=self.lang,
             lemma=derived_lemma,
             form=derived_lemma,
             upos=d_upos
@@ -132,14 +148,15 @@ class AuCoProReader(AnalysesReaderAbstract):
 # )
 #
 # query = LexItem(
-#     lemma='woordeskatitems',
-#     form='woordeskatitems',
-#     upos='NOUN',
+#     lang="afr",
+#     lemma="woordeskatitems",
+#     form="woordeskatitems",
+#     upos="NOUN",
 # )
 #
 # inventory.make_subword_tree(
 #     query
-# ).html(f"{query.lemma}_{query.upos}.html")
+# ).html(f"examples/{query.lang}_{query.lemma}_{query.upos}.html")
 
 
 # Dutch example
@@ -151,11 +168,12 @@ class AuCoProReader(AnalysesReaderAbstract):
 # )
 #
 # query = LexItem(
-#     lemma='temperatuursverandering',
-#     form='temperatuursverandering',
-#     upos='NOUN',
+#     lang="nld",
+#     lemma="temperatuursverandering",
+#     form="temperatuursverandering",
+#     upos="NOUN",
 # )
 #
 # inventory.make_subword_tree(
 #     query
-# ).html(f"{query.lemma}_{query.upos}.html")
+# ).html(f"examples/{query.lang}_{query.lemma}_{query.upos}.html")

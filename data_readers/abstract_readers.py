@@ -5,8 +5,8 @@ from src import LexItem, WFToken, Inventory
 
 
 class ReaderAbstract(ABC):
-    def __init__(self, *args, **kwargs):
-        pass
+    def __init__(self, lang: str, *args, **kwargs):
+        self.lang = lang
 
     @abstractmethod
     def build_inventory(self, *args, **kwargs) -> Inventory:
@@ -22,6 +22,15 @@ class ReaderAbstract(ABC):
 
 
 class AnalysesReaderAbstract(ReaderAbstract, ABC):
+    @abstractmethod
+    def build_inventory(
+            self,
+            path: str,
+            bracketing_strategy: str = "last",
+            **kwargs
+    ) -> Inventory:
+        raise NotImplementedError
+
     @abstractmethod
     def read_dataset(self, *args, **kwargs) -> Dict[LexItem, WFToken]:
         raise NotImplementedError

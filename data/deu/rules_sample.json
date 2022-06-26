@@ -8,7 +8,7 @@
   },
   "dVN10": {
     "rule_id": "dVN10(VERB + 0 -> NOUN)",
-    "short_id": "-en>0",
+    "short_id": "-0",
     "info": "SFX",
     "pos_b": "VERB",
     "pos_a": "NOUN"

@@ -8,10 +8,11 @@ from dep_tregex.ya_dep import visualize_tree
 @dataclass(frozen=True)
 class LexItem:
     lemma: str
-    lid: Optional[str] = None
     form: Optional[str] = None
     upos: str = "_"
     xpos: str = "_"
+    lid: Optional[str] = None
+    lang: Optional[str] = None
 
 
 @dataclass(frozen=True)
@@ -189,7 +190,7 @@ class Inventory:
         self.rules_by_ids: Dict[str, RuleInfo] = rules_by_ids or {}
         self.word_analyses = word_analyses or {}
         self.word_trees = word_trees or {}
-        self.modifiers_strategy = bracketing_strategy
+        self.bracketing_strategy = bracketing_strategy
 
     @staticmethod
     def _merge_trees(
@@ -292,13 +293,13 @@ class Inventory:
             modifiers_trees.append(m_tree)
 
         # handle dependency relations between modifiers
-        if self.modifiers_strategy == "head":
+        if self.bracketing_strategy == "head":
             # (m1 (m2 (m3 h)))
             for modifier_tree in reversed(modifiers_trees):
                 stem_tree = self._merge_trees(
                     modifier_tree, stem_tree, "compound", is_arc_l2r=False
                 )
-        elif self.modifiers_strategy == "last":
+        elif self.bracketing_strategy == "last":
             # ((m1 (m2 m3)) h)
             modifiers_tree = modifiers_trees[-1]
             for modifier_tree in reversed(modifiers_trees[:-1]):
@@ -309,7 +310,7 @@ class Inventory:
             stem_tree = self._merge_trees(
                 modifiers_tree, stem_tree, "compound", is_arc_l2r=False
             )
-        elif self.modifiers_strategy == "chain":
+        elif self.bracketing_strategy == "chain":
             # (((m1 m2) m3) h)
             modifiers_tree = modifiers_trees[0]
             for modifier_tree in modifiers_trees[1:]:
@@ -323,7 +324,7 @@ class Inventory:
         else:
             raise ValueError(
                 f"Unsupported modifiers roots "
-                f"resolving strategy {self.modifiers_strategy}!"
+                f"resolving strategy {self.bracketing_strategy}!"
             )
 
         return stem_tree
@@ -428,3 +429,23 @@ class Inventory:
             united_subword_tokens[idx].deprel = token.deprel
 
         return CONLLUTree(united_subword_tokens)
+
+
+def unite_inventories(*inventories: Inventory) -> Inventory:
+    rules_by_ids = {}
+    word_analyses = {}
+    word_trees = {}
+    for inventory in inventories:
+        rules_by_ids.update(inventory.rules_by_ids)
+        word_analyses.update(inventory.word_analyses)
+        word_trees.update(inventory.word_trees)
+    bracketing_strategy, = set(
+        inventory.bracketing_strategy
+        for inventory in inventories
+    )
+    return Inventory(
+        rules_by_ids=rules_by_ids,
+        word_analyses=word_analyses,
+        word_trees=word_trees,
+        bracketing_strategy=bracketing_strategy
+    )

@@ -9,7 +9,26 @@ from src import (
 from data_readers.abstract_readers import AnalysesReaderAbstract
 
 
-class DemoNextReader(AnalysesReaderAbstract):
+class DemonextReader(AnalysesReaderAbstract):
+    """
+    Reader for the Demonext database.
+
+    rid	graph_1	graph_2	cat_1	cat_2	type_cstr_1	cstr_1	type_cstr_2	cstr_2	complexite	orientation
+    r61927	renflammer	enflammer	V	V	pre	reX	NA	X	simple	des2as
+    r51619	inflammatoire	enflammer	Adj	V	suf	Xoire	NA	X	simple	des2as
+    r16915	inflammation	enflammer	Nf	V	suf	Xion	NA	X	simple	des2as
+    r25595	Flammounette	flamme	Npx	Nf	suf	Xounette	NA	X	simple	des2as
+    r13534	flammelette	flamme	Nf	Nf	suf	Xelette	NA	X	simple	des2as
+    r48322	flammé	flamme	Adj	Nf	suf	Xé	NA	X	simple	des2as
+    r13533	flammage	flammer	Nm	V	suf	Xage	NA	X	simple	des2as
+    r11828	enflammer	flamme	V	Nf	pre	enX	NA	X	simple	des2as
+    r11827	enflammement	enflammer	Nm	V	suf	Xment	NA	X	simple	des2as
+    r11826	enflammation	enflammer	Nf	V	suf	Xion	NA	X	simple	des2as
+    r116	anti-inflammatoire	inflammatoire	Adj	Adj	pre	antiX	NA	X	motiv-form	des2as
+    r117	anti-inflammatoire	anti-inflammatoire	Nm	Adj	conv	X	NA	X	simple	des2as
+
+    http://demonext.llf-paris.fr/demonext/vues/front_page.php
+    """
     POS2UPOS = {
         "V": "VERB",
         "Adj": "ADJ",
@@ -33,10 +52,15 @@ class DemoNextReader(AnalysesReaderAbstract):
         "conv": "CONV",
     }
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __init__(self, lang: str, *args, **kwargs):
+        super().__init__(lang, *args, **kwargs)
 
-    def build_inventory(self, path: str) -> Inventory:
+    def build_inventory(
+            self,
+            path: str,
+            bracketing_strategy: str = "last",
+            **kwargs
+    ) -> Inventory:
         derivations_analyses = self.read_dataset(path)
 
         rules_by_ids = {}
@@ -83,6 +107,7 @@ class DemoNextReader(AnalysesReaderAbstract):
         inventory = Inventory(
             word_analyses=derivations_analyses,
             rules_by_ids=rules_by_ids,
+            bracketing_strategy=bracketing_strategy
         )
         return inventory
 
@@ -109,6 +134,7 @@ class DemoNextReader(AnalysesReaderAbstract):
         rule_id = line["cstr_1"]
 
         word = LexItem(
+            lang=self.lang,
             lemma=derived_lemma,
             form=derived_lemma,
             upos=upos_d,
@@ -117,6 +143,7 @@ class DemoNextReader(AnalysesReaderAbstract):
 
         analysis = WFToken(
             d_from=LexItem(
+                lang=self.lang,
                 lemma=source_lemma,
                 form=source_lemma,
                 upos=upos_s,
@@ -128,18 +155,19 @@ class DemoNextReader(AnalysesReaderAbstract):
         return [(word, analysis)]
 
 
-inventory = DemoNextReader().build_inventory(
-    "../data/fra/demonext/sample.txt"
-    # "../data/fra/demonext/relations.csv"
-)
-
-query = LexItem(
-    lemma='anti-inflammatoire',
-    form='anti-inflammatoire',
-    upos='NOUN',
-    xpos='Nm'
-)
-
-inventory.make_subword_tree(
-    query
-).html(f"examples/{query.lemma}_{query.upos}.html")
+# inventory = DemonextReader(lang="fra").build_inventory(
+#     "../data/fra/demonext/sample.txt"
+#     # "../data/fra/demonext/relations.csv"
+# )
+#
+# query = LexItem(
+#     lang="fra",
+#     lemma="anti-inflammatoire",
+#     form="anti-inflammatoire",
+#     upos="NOUN",
+#     xpos="Nm"
+# )
+#
+# inventory.make_subword_tree(
+#     query
+# ).html(f"examples/{query.lang}_{query.lemma}_{query.upos}.html")

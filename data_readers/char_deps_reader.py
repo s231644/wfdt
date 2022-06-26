@@ -9,6 +9,24 @@ from data_readers.abstract_readers import ReaderAbstract
 
 
 class CharDepsReader(ReaderAbstract):
+    """
+    Reader for the
+    SJTU (Shanghai Jiao Tong University) Chinese Character Dependency Treebank.
+
+    [ 47332]	index	char	pos	head-index	dp-label
+        1	聆	v	2	vv
+        2	听	v	4	a-v-a
+        3	已	d	4	a-d-a
+        4	久	a	0	root-a
+
+    [ 80362]	index	char	pos	head-index	dp-label
+        1	热	a	2	ad
+        2	情	n	4	v-n-v
+        3	洋	v	4	vc
+        4	溢	v	0	root-n
+
+    https://bcmi.sjtu.edu.cn/~zebraform/
+    """
     POS2UPOS = {
         # absolute POS tags
         "p": "PRON",
@@ -44,7 +62,7 @@ class CharDepsReader(ReaderAbstract):
             line = line.strip()
             if not line:
                 for word, analysis in self.read_sample(cur_lines, cur_id):
-                   results[word] = analysis
+                    results[word] = analysis
                 cur_lines = []
                 continue
             if line.startswith("["):
@@ -55,7 +73,7 @@ class CharDepsReader(ReaderAbstract):
         else:
             if cur_lines:
                 for word, analysis in self.read_sample(cur_lines, cur_id):
-                   results[word] = analysis
+                    results[word] = analysis
 
         return results
 
@@ -82,7 +100,8 @@ class CharDepsReader(ReaderAbstract):
 
         lemma = "".join([t.form for t in tokens])
         word = LexItem(
-            lid=cur_id,
+            lang=self.lang,
+            # lid=cur_id,
             form=lemma,
             lemma=lemma,
             upos=self.POS2UPOS[word_xpos],
@@ -93,12 +112,13 @@ class CharDepsReader(ReaderAbstract):
 
 # Chinese example
 
-# inventory = CharDepsReader().build_inventory(
+# inventory = CharDepsReader(lang="zho").build_inventory(
 #     "../data/zho/chinesechardeps/sample.txt"
 # )
 #
 # query = LexItem(
-#     lid="47332",
+#     lang="zho",
+#     # lid="47332",
 #     lemma="聆听已久",
 #     form="聆听已久",
 #     upos="ADJ",
@@ -107,4 +127,4 @@ class CharDepsReader(ReaderAbstract):
 #
 # inventory.make_subword_tree(
 #     query
-# ).html(f"{query.lemma}_{query.upos}.html")
+# ).html(f"examples/{query.lang}_{query.lemma}_{query.upos}.html")
