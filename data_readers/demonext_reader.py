@@ -52,9 +52,6 @@ class DemonextReader(AnalysesReaderAbstract):
         "conv": "CONV",
     }
 
-    def __init__(self, lang: str, *args, **kwargs):
-        super().__init__(lang, *args, **kwargs)
-
     def build_inventory(
             self,
             path: str,

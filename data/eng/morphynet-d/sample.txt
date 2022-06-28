@@ -1,0 +1,7 @@
+fay	faith	V	N	th	suffix
+faith	faithful	N	J	ful	suffix
+faithful	faithfully	J	R	ly	suffix
+faithful	unfaithful	J	J	un	prefix
+faithful	faithfulness	J	N	ness	suffix
+unfaithful	unfaithfulness	J	N	ness	suffix
+faithfulness	unfaithfulness	N	N	un	prefix
