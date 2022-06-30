@@ -36,6 +36,7 @@ class DerivaTarioReader(ReaderAbstract):
         for line in lines:
             for word, analysis in self.read_sample(line):
                 results[word] = analysis
+
         return results
 
     def read_sample(
@@ -90,8 +91,9 @@ class DerivaTarioReader(ReaderAbstract):
 # inventory = DerivaTarioReader(lang="ita").build_inventory(
 #     "../data/ita/derivatario/derivatario.csv"
 # )
-#
-#
+
+# rivitalizzare
+# rivoluzionarismo
 # query = LexItem(
 #     lang="ita",
 #     lemma="anti-totalitarista",

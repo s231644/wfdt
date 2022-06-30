@@ -138,3 +138,5 @@ dmypy.json
 /data/deu/germanet/split_compounds_from_GermaNet17.0.txt
 /data/fra/demonext/relations.csv
 /data/ita/derivatario/derivatario.csv
+/data/lat/word-formation-latin/formario_ITTB_17-10-2017_tagged_fixed.xml
+/data/lat/word-formation-latin/lemlat_db.sql
