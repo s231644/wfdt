@@ -1,0 +1,2 @@
+INSERT INTO `lemmario` VALUES (13151,'dulciorelocus','N2','m','NcB','d1454','dulciorelocus','NOUN',NULL,'B'),(13152,'dulciorelocus','N2/1','*','Af-','d1453','dulciorelocus','ADJ',NULL,'B');
+INSERT INTO `lemmas_wfr` VALUES ('102',13151,13152,1,'A-To-N','Derivation_Conversion',NULL);

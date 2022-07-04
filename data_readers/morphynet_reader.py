@@ -21,7 +21,7 @@ class MorphyNetDerivationalReader(AnalysesReaderAbstract):
     unfaithful	unfaithfulness	J	N	ness	suffix
     faithfulness	unfaithfulness	N	N	un	prefix
 
-
+    https://github.com/kbatsuren/MorphyNet
     """
     POS2UPOS = {
         "V": "VERB",

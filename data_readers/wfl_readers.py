@@ -13,7 +13,7 @@ from data_readers.abstract_readers import AnalysesReaderAbstract
 
 class WordFormationLatinReaderAbstract(AnalysesReaderAbstract, ABC):
     """
-    TODO: docs
+    A common class for WFL readers.
     """
     POS2UPOS = {
         "V": "VERB",
@@ -51,7 +51,7 @@ class WordFormationLatinReaderAbstract(AnalysesReaderAbstract, ABC):
                     rules_by_ids[v.rule_id] = rule
                 else:
                     # TODO: compounding rules;
-                    #  without them automatic method is used
+                    #  without them the default method is used
                     pass
             elif len(rule_parts) == 4:
                 rule_id, process, category, affix = rule_parts
@@ -74,6 +74,15 @@ class WordFormationLatinReaderAbstract(AnalysesReaderAbstract, ABC):
 
 
 class WordFormationLatinSQLReader(WordFormationLatinReaderAbstract):
+    """
+    Reader for WFL / LEMLAT3 from SQL format.
+
+    INSERT INTO `lemmario` VALUES (13151,'dulciorelocus','N2','m','NcB','d1454','dulciorelocus','NOUN',NULL,'B'),(13152,'dulciorelocus','N2/1','*','Af-','d1453','dulciorelocus','ADJ',NULL,'B');
+    INSERT INTO `lemmas_wfr` VALUES ('102',13151,13152,1,'A-To-N','Derivation_Conversion',NULL);
+
+    https://github.com/CIRCSE/LEMLAT3
+    """
+
     LEMMAS_PREFIX = "INSERT INTO `lemmario` VALUES"
     WFR_PREFIX = "INSERT INTO `lemmas_wfr` VALUES"
 
@@ -169,7 +178,9 @@ class WordFormationLatinSQLReader(WordFormationLatinReaderAbstract):
 
 class WordFormationLatinXMLReader(WordFormationLatinReaderAbstract):
     """
-    TODO: docs
+    Reader for WFL (2017 version).
+
+    https://github.com/CIRCSE/WFL
     """
     def read_dataset(self, path: str) -> Dict[LexItem, WFToken]:
         xml = ET.parse(path)

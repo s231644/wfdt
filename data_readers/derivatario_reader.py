@@ -10,7 +10,11 @@ from data_readers.abstract_readers import ReaderAbstract
 
 class DerivaTarioReader(ReaderAbstract):
     """
-    TODO: docs
+    Reader for DerIvaTario.
+
+    7883;ANTI-TOTALITARISTA;TOTALE:root;ITÀ:ità:mt1:ms2b;ARIO:ario:mt1:ms2a;ISMO:ismo:mt1:ms1;ANTI:anti:mt1:ms1;ISTA:ista:mt6:ms1;
+
+    https://derivatario.sns.it
     """
     prefixes = {
         "acons", "anti", "auto", "bi", "tri", "de", "1de", "2de", "dis", "in",
