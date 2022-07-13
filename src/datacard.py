@@ -24,7 +24,7 @@ all_cards = {
         authors="Menno van Zaanen & Gerhard B. van Huyssteen",
         url="http://tinyurl.com/aucopro",
         record_format="segmentation",
-        level="morph",
+        level=["morph"],
         phoenomena=["compounding"]
     ),
     "deu_germanet": DatasetCard(
@@ -34,7 +34,7 @@ all_cards = {
         authors="Henrich, V., & E. Hinrichs",
         url="https://uni-tuebingen.de/fakultaeten/philosophische-fakultaet/fachbereiche/neuphilologie/seminar-fuer-sprachwissenschaft/arbeitsbereiche/allg-sprachwissenschaft-computerlinguistik/ressourcen/lexica/germanet-1/",
         record_format="segmentation",
-        level="lemma",
+        level=["lemma"],
         phoenomena=["compounding"]
     ),
     "fra_demonext": DatasetCard(
@@ -57,6 +57,16 @@ all_cards = {
         level=["lemma", "affix morpheme"],
         phoenomena=["derivation"]
     ),
+    "kor_kaist_udt": DatasetCard(
+        lang="kor",
+        name="The KAIST Korean Universal Dependency Treebank",
+        version="2018-04-15 v2.2",
+        authors="Jayeol Chun, Na-Rae Han, Jena D. Hwang, and Jinho D. Choi",
+        url="https://github.com/UniversalDependencies/UD_Korean-Kaist",
+        record_format="segmentation",
+        level=["wordform", "morpheme"],
+        phoenomena=["inflection", "derivation", "compounding"]
+    ),
     "lat_wfl": DatasetCard(
         lang="lat",
         name="Word Formation Latin (WFL)",
@@ -77,6 +87,16 @@ all_cards = {
         level=["lemma", "affix morpheme"],
         phoenomena=["derivation", "compounding"]
     ),
+    "ndl_aucopro": DatasetCard(
+        lang="ndl",
+        name="AuCoPro",
+        version="2014-01-31",
+        authors="Menno van Zaanen & Gerhard B. van Huyssteen",
+        url="http://tinyurl.com/aucopro",
+        record_format="segmentation",
+        level=["morph"],
+        phoenomena=["compounding"]
+    ),
     "zho_chinesechardeps": DatasetCard(
         lang="zho",
         name="SJTU (Shanghai Jiao Tong University) Chinese Character Dependency Treebank",
@@ -86,15 +106,5 @@ all_cards = {
         record_format="intraword dependencies",
         level=["morpheme"],
         phoenomena=["derivation", "compounding"]
-    ),
-    "ndl_aucopro": DatasetCard(
-        lang="ndl",
-        name="AuCoPro",
-        version="2014-01-31",
-        authors="Menno van Zaanen & Gerhard B. van Huyssteen",
-        url="http://tinyurl.com/aucopro",
-        record_format="segmentation",
-        level="morph",
-        phoenomena=["compounding"]
     ),
 }

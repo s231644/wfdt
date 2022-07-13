@@ -141,3 +141,7 @@ dmypy.json
 /data/lat/word-formation-latin/formario_ITTB_17-10-2017_tagged_fixed.xml
 /data/lat/lemlat3/lemlat_db.sql
 /data/lat/wfl/formario_ITTB_17-10-2017_tagged_fixed.xml
+/data/kor/kaist_udt/ko_kaist-ud-dev.conllu
+/data/kor/kaist_udt/ko_kaist-ud-test.conllu
+/data/kor/kaist_udt/ko_kaist-ud-train.conllu
+/data/popoluca/popoluca_de_texistepec/popoluca-de-texistepec.pdf
