@@ -17,22 +17,17 @@ class PopolucaDeTexistepecReader(ReaderAbstract):
     The examples are taken from the book (see link below).
 
     Format:
-    # Sentence id
-    Popoluca surface text
+    Sentence id. Popoluca surface text
     Popoluca canonical morpheme segmentation
     /Spanish/element-wise/translation/
     Spanish surface text
 
-    Upper-indexed "d^y" are replaced with "dY".
-
-    # 13.
-    ʔi pɨ:ñdYa:ʔ du:ru dYyakaʔ čyo:koʔ
+    13. ʔi pɨ:ñdya:ʔ du:ru dyyakaʔ čyo:koʔ
     ʔi pɨ:ñ-da:ʔ du:ru y-yakaʔ y-¢o:koʔ
     /y/hombre-aum./duro/A3-matar/A3-corazón/
     Y el señor estaba desesperado.
 
-    # 16.
-    maʔte hokska:keʔ
+    16. maʔte hokska:keʔ
     maʔ=te Ø-hoks=kak=eʔ
     /aux.:pfv.=inc./B3-rozar=iter.=dep./
     Otra vez empezó a rozar.
@@ -40,26 +35,93 @@ class PopolucaDeTexistepecReader(ReaderAbstract):
     The book:
     https://arqueologiamexicana.mx/sites/default/files/banco_imagenes/popoluca-de-texistepec.pdf
     """
-    # TODO: convert to universal features
+
+    # TODO: map to universal features
     ABREVIATURAS = {
-        "3": "tercera persona",
-        "A": "marcador de caso ergativo y posesión",
-
-        "aum.": "aumentativo",
-        "aux.": "verbo auxiliar",
-        "B": "marcador de caso absolutivo",
-
-        "dep.": "dependiente",
-        "iter.": "iterativo",
-
-        "pfv.": "perfectivo",
-
-        "RED": "reduplicación",
-
-        "y": "ligadura /y/",
+        '1': 'primera persona',
+        '1,2 pl.': 'plural de la primera (excl.) o segunda persona',
+        r'1\2': 'primera persona agente, segunda persona paciente',
+        '2': 'segunda persona',
+        r'2\1': 'segunda persona agente, primera persona paciente',
+        '3': 'tercera persona',
+        'A': 'marcador de caso ergativo y posesión',
+        'adjr.': 'adjetivizador',
+        'adjr. aum.': 'adjetivizador aumentizante',
+        'adjr. int.': 'adjetivizador intensificante',
+        'and.': 'andativo',
+        'antipas.': 'antipasivo',
+        'apl.': 'aplicativo',
+        'apll.': 'aplicativo doble',
+        'aum.': 'aumentativo',
+        'aux.': 'verbo auxiliar',
+        'B': 'marcador de caso absolutivo',
+        'caus.': 'causativo',
+        'cn.': 'clasificador numeral',
+        'cop.': 'verbo copulativo',
+        'cuot.': 'cuotativo',
+        'def.': 'definido',
+        'deíc.': 'sufijo en ciertas raíces deícticas',
+        'denom.': 'denominalizador',
+        'dep.': 'dependiente',
+        'desid.': 'desiderativo',
+        'devrbr.': 'deverbalizador',
+        'dif.': 'acción difusa',
+        'dim.': 'diminutivo',
+        'distr.': 'distributivo',
+        'est. pos.': 'estativo de verbo posicional',
+        'excl.': 'exclamación',
+        'fem.': 'femenino',
+        'fos.': 'fosilizado',
+        'fut.': 'futuro',
+        'fut. inm.': 'futuro inmediato',
+        'h': '/h/ ligadura',
+        'hab.': 'habitual',
+        'hum.': 'humanos',
+        'imp.': 'imperativo',
+        'inc.': 'incoativo',
+        'incl.': 'inclusivo',
+        'instr.': 'instrumental',
+        'int.': 'intensivo',
+        'interr.': 'partícula interrogativa',
+        'intro. adj.': 'morfema que introduce adjetivos',
+        'ipfv.': 'imperfectivo',
+        'it.': 'intensivo-traslativo',
+        'iter.': 'iterativo',
+        'k': '/k/ epentética',
+        'loc.1': 'locativo',
+        'loc.2': 'locativo',
+        'loc.3': 'locativo',
+        'loc.4': 'locativo',
+        'loc.5': 'locativo',
+        'neg.': 'negación',
+        'no hum.': 'no humano',
+        'nom.': 'nominalizador',
+        'nom. instr.': 'nominalizador instrumental',
+        'onomat.': 'onomatopeya',
+        'opt.': 'optativo',
+        'perm.': 'permisivo',
+        'pfv.': 'perfectivo',
+        'pl.': 'plural',
+        'pas.': 'pasivo',
+        'pos.': 'posicional',
+        'pro.': 'pronombre',
+        'pro. pos.': 'pronombre poseído',
+        'psd.': 'pasado-condicional',
+        'rec.': 'recíproco',
+        'RED': 'reduplicación',
+        'rel.': 'relativizador',
+        'sub.': 'subordinador',
+        'sub. fos.': 'subordinador fosilizado',
+        'suf. adj.': 'sufijo de ciertos adjetivos',
+        'tras.': 'traslativo',
+        'trr.': 'transitivador',
+        'vrbr.': 'verbalizador',
+        'y': 'ligadura /y/'
     }
 
-    PUNCT = "¿?"
+    PUNCT = "¿?¡!,…"
+
+    REPLACES = {"é": "ɨ"}
 
     SPANISH_POS_VOCAB = {
         "hombre": "NOUN",
@@ -97,7 +159,6 @@ class PopolucaDeTexistepecReader(ReaderAbstract):
             if cur_lines:
                 for word, analysis in self.read_sample(cur_lines):
                     results[word] = analysis
-
         return results
 
     def read_sample(
@@ -109,7 +170,11 @@ class PopolucaDeTexistepecReader(ReaderAbstract):
             surface_text, segmented_text, gram_feats_text, translation_text
         ) = cur_lines
 
-        surface_tokens = surface_text.split()
+        for rk, rv in self.REPLACES.items():
+            surface_text = surface_text.replace(rk, rv)
+            segmented_text = segmented_text.replace(rk, rv)
+
+        sent_id, *surface_tokens = surface_text.split()
         # ["maʔte", "hokska:keʔ"]
 
         segmented_tokens = segmented_text.split()
@@ -118,7 +183,9 @@ class PopolucaDeTexistepecReader(ReaderAbstract):
         gram_feats_tokens = gram_feats_text.strip("\n/").split("/")
         # ["aux.:pfv.=inc.", "B3-rozar=iter.=dep."]
 
-        assert len(surface_tokens) == len(segmented_tokens) == len(gram_feats_tokens)
+        assert \
+            len(surface_tokens) == len(segmented_tokens) == len(gram_feats_tokens), \
+            (sent_id, len(surface_tokens), len(segmented_tokens), len(gram_feats_tokens))
 
         for surface_token, segmented_token, gram_feats_token in zip(
             surface_tokens, segmented_tokens, gram_feats_tokens
@@ -130,7 +197,9 @@ class PopolucaDeTexistepecReader(ReaderAbstract):
             gram_feats = re.split("[-=]", gram_feats_token)
             # ["B3", "rozar", "iter.", "dep."]
 
-            assert len(morphemes) == len(gram_feats)
+            assert \
+                len(morphemes) == len(gram_feats), \
+                (sent_id, morphemes, gram_feats)
 
             subword_tokens = []
 
@@ -195,19 +264,19 @@ class PopolucaDeTexistepecReader(ReaderAbstract):
         return sentence_analyses
 
 
-inventory = PopolucaDeTexistepecReader(lang="popoluca").build_inventory(
-    "../data/popoluca/popoluca_de_texistepec/sample.txt"
-)
+# inventory = PopolucaDeTexistepecReader(lang="poq").build_inventory(
+#     "../data/poq/popoluca_de_texistepec/sample.txt"
+# )
 
-query = LexItem(
-    lemma='Ø-hoks=kak=eʔ',
-    form='hokska:keʔ',
-    upos='X',
-    xpos='X',
-    lid=None,
-    lang='popoluca'
-)
-
-inventory.make_subword_tree(
-    query
-).html(f"examples/{query.lang}_{query.lemma}_{query.upos}.html")
+# query = LexItem(
+#     lemma='Ø-hoks=kak=eʔ',
+#     form='hokska:keʔ',
+#     upos='X',
+#     xpos='X',
+#     lid=None,
+#     lang='poq'
+# )
+#
+# inventory.make_subword_tree(
+#     query
+# ).html(f"examples/{query.lang}_{query.lemma}_{query.upos}.html")

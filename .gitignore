@@ -144,4 +144,8 @@ dmypy.json
 /data/kor/kaist_udt/ko_kaist-ud-dev.conllu
 /data/kor/kaist_udt/ko_kaist-ud-test.conllu
 /data/kor/kaist_udt/ko_kaist-ud-train.conllu
-/data/popoluca/popoluca_de_texistepec/popoluca-de-texistepec.pdf
+/data/poq/popoluca_de_texistepec/CONVERSACION.txt
+/data/poq/popoluca_de_texistepec/NARRACION.txt
+/data/poq/popoluca_de_texistepec/SINTAXIS.txt
+/data/poq/popoluca_de_texistepec/popoluca-de-texistepec.pdf
+/data/poq/popoluca_de_texistepec/spanish_words.txt
