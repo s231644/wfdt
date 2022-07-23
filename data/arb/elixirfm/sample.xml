@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ElixirFM xmlns="http://ufal.mff.cuni.cz/pdt/pml/">
+  <head>
+    <schema href="elixir.schema.xml"/>
+  </head>
+  <meta>
+    <revision>$Revision: 735 $</revision>
+    <date>$Date: 2016-05-10 00:12:49 +0200 (Tue, 10 May 2016) $</date>
+  </meta>
+  <data>
+    <Cluster>
+      <Nest>
+        <root>b .s r	ب ص ر	b ṣ r</root>
+        <ents>
+          <Entry>
+            <morphs>FaCL |&lt; Iy	ba.srIy	بَصرِيّ	baṣrīy</morphs>
+            <entity>
+              <Adj/>
+            </entity>
+            <reflex>of / from Basra</reflex>
+          </Entry>
+          <Entry>
+            <morphs>FaCL |&lt; Iy	ba.srIy	بَصرِيّ	baṣrīy</morphs>
+            <entity>
+              <Noun>
+                <plural>FaCL |&lt; Iy |&lt; Un	ba.srIyUn	بَصرِيُّون	baṣrīyūn</plural>
+                <femini>FaCL |&lt; Iy |&lt; aT	ba.srIyaT	بَصرِيَّة	baṣrīyat</femini>
+              </Noun>
+            </entity>
+            <reflex>of / from Basra</reflex>
+          </Entry>
+          <Entry>
+            <morphs>FaCL |&lt; Iy	ba.srIy	بَصرِيّ	baṣrīy</morphs>
+            <entity>
+              <Noun/>
+            </entity>
+            <reflex>Basri</reflex>
+          </Entry>
+          <Entry>
+            <morphs>FaCL |&lt; aT	ba.sraT	بَصرَة	baṣrat</morphs>
+            <entity>
+              <Noun/>
+            </entity>
+            <reflex>Basra</reflex>
+          </Entry>
+          <Entry>
+            <morphs>FaCL |&lt; aT |&lt; An	ba.sraTAn	بَصرَتَان	baṣratān</morphs>
+            <entity>
+              <Noun/>
+            </entity>
+            <reflex>Basra and Kufa</reflex>
+          </Entry>
+        </ents>
+      </Nest>
+      <Nest>
+        <root>b .s r	ب ص ر	b ṣ r</root>
+        <ents>
+          <Entry>
+            <morphs>FaCuL	ba.sur	بَصُر	baṣur</morphs>
+            <entity>
+              <Verb>
+                <form>I</form>
+                <imperf>FCuL	b.sur	بصُر	bṣur</imperf>
+              </Verb>
+            </entity>
+            <reflex>
+              <LM>perceive</LM>
+              <LM>understand</LM>
+              <LM>realize</LM>
+              <LM>see</LM>
+            </reflex>
+          </Entry>
+          <Entry>
+            <morphs>FaCiL	ba.sir	بَصِر	baṣir</morphs>
+            <entity>
+              <Verb>
+                <form>I</form>
+                <imperf>FCaL	b.sar	بصَر	bṣar</imperf>
+              </Verb>
+            </entity>
+            <reflex>
+              <LM>perceive</LM>
+              <LM>understand</LM>
+              <LM>realize</LM>
+              <LM>see</LM>
+            </reflex>
+          </Entry>
+          <Entry>
+            <morphs>FaCCaL	ba.s.sar	بَصَّر	baṣṣar</morphs>
+            <entity>
+              <Verb>
+                <form>II</form>
+              </Verb>
+            </entity>
+            <reflex>
+              <LM>make see</LM>
+              <LM>enlighten</LM>
+            </reflex>
+          </Entry>
+          <Entry>
+            <morphs>HaFCaL	'ab.sar	أَبصَر	ʾabṣar</morphs>
+            <entity>
+              <Verb>
+                <form>IV</form>
+              </Verb>
+            </entity>
+            <reflex>
+              <LM>see</LM>
+              <LM>notice</LM>
+            </reflex>
+          </Entry>
+          <Entry>
+            <morphs>TaFaCCaL	taba.s.sar	تَبَصَّر	tabaṣṣar</morphs>
+            <entity>
+              <Verb>
+                <form>V</form>
+              </Verb>
+            </entity>
+            <reflex>
+              <LM>envisage</LM>
+              <LM>ponder</LM>
+            </reflex>
+          </Entry>
+          <Entry>
+            <morphs>IstaFCaL	istab.sar	اِستَبصَر	istabṣar</morphs>
+            <entity>
+              <Verb>
+                <form>X</form>
+              </Verb>
+            </entity>
+            <reflex>
+              <LM>be rational</LM>
+              <LM>reflect</LM>
+            </reflex>
+          </Entry>
+          <Entry>
+            <morphs>FaCaL	ba.sar	بَصَر	baṣar</morphs>
+            <entity>
+              <Noun>
+                <plural>HaFCAL	'ab.sAr	أَبصَار	ʾabṣār</plural>
+              </Noun>
+            </entity>
+            <reflex>
+              <LM>vision</LM>
+              <LM>view</LM>
+              <LM>glance</LM>
+              <LM>perception</LM>
+            </reflex>
+          </Entry>
+          <Entry>
+            <morphs>FaCaL |&lt; Iy	ba.sarIy	بَصَرِيّ	baṣarīy</morphs>
+            <entity>
+              <Adj/>
+            </entity>
+            <reflex>
+              <LM>visual</LM>
+              <LM>optical</LM>
+            </reflex>
+          </Entry>
+          <Entry>
+            <morphs>FaCaL |&lt; Iy |&lt; At	ba.sarIyAt	بَصَرِيَّات	baṣarīyāt</morphs>
+            <entity>
+              <Noun>
+                <plural>FaCaL |&lt; Iy |&lt; At	ba.sarIyAt	بَصَرِيَّات	baṣarīyāt</plural>
+              </Noun>
+            </entity>
+            <limits>
+              <fst>-------P--</fst>
+            </limits>
+            <reflex>optics</reflex>
+          </Entry>
+          <Entry>
+            <morphs>FaCAL |&lt; aT	ba.sAraT	بَصَارَة	baṣārat</morphs>
+            <entity>
+              <Noun/>
+            </entity>
+            <reflex>perception</reflex>
+          </Entry>
+          <Entry>
+            <morphs>FaCIL	ba.sIr	بَصِير	baṣīr</morphs>
+            <entity>
+              <Adj>
+                <plural>
+                  <LM>FuCaLA'	bu.sarA'	بُصَرَاء	buṣarāʾ</LM>
+                  <LM>FaCIL |&lt; Un	ba.sIrUn	بَصِيرُون	baṣīrūn</LM>
+                </plural>
+              </Adj>
+            </entity>
+            <reflex>
+              <LM>seeing</LM>
+              <LM>discerning</LM>
+            </reflex>
+          </Entry>
+          <Entry>
+            <morphs>FaCIL |&lt; aT	ba.sIraT	بَصِيرَة	baṣīrat</morphs>
+            <entity>
+              <Noun>
+                <plural>FaCA'iL	ba.sA'ir	بَصَائِر	baṣāʾir</plural>
+              </Noun>
+            </entity>
+            <reflex>
+              <LM>insight</LM>
+              <LM>discernment</LM>
+            </reflex>
+          </Entry>
+          <Entry>
+            <morphs>HaFCaL	'ab.sar	أَبصَر	ʾabṣar</morphs>
+            <entity>
+              <Adj/>
+            </entity>
+            <reflex>more / most discerning</reflex>
+          </Entry>
+          <Entry>
+            <morphs>TaFCiL |&lt; aT	tab.siraT	تَبصِرَة	tabṣirat</morphs>
+            <entity>
+              <Noun/>
+            </entity>
+            <reflex>
+              <LM>enlightenment</LM>
+              <LM>instruction</LM>
+            </reflex>
+          </Entry>
+          <Entry>
+            <morphs>HiFCAL	'ib.sAr	إِبصَار	ʾibṣār</morphs>
+            <entity>
+              <Noun>
+                <plural>HiFCAL |&lt; At	'ib.sArAt	إِبصَارَات	ʾibṣārāt</plural>
+              </Noun>
+            </entity>
+            <reflex>
+              <LM>perception</LM>
+              <LM>vision</LM>
+            </reflex>
+          </Entry>
+          <Entry>
+            <morphs>HiFCAL |&lt; Iy	'ib.sArIy	إِبصَارِيّ	ʾibṣārīy</morphs>
+            <entity>
+              <Adj/>
+            </entity>
+            <reflex>optical</reflex>
+          </Entry>
+          <Entry>
+            <morphs>TaFaCCuL	taba.s.sur	تَبَصُّر	tabaṣṣur</morphs>
+            <entity>
+              <Noun>
+                <plural>TaFaCCuL |&lt; At	taba.s.surAt	تَبَصُّرَات	tabaṣṣurāt</plural>
+              </Noun>
+            </entity>
+            <reflex>
+              <LM>reflection</LM>
+              <LM>consideration</LM>
+            </reflex>
+          </Entry>
+          <Entry>
+            <morphs>IstiFCAL	istib.sAr	اِستِبصَار	istibṣār</morphs>
+            <entity>
+              <Noun>
+                <plural>IstiFCAL |&lt; At	istib.sArAt	اِستِبصَارَات	istibṣārāt</plural>
+              </Noun>
+            </entity>
+            <reflex>
+              <LM>insight</LM>
+              <LM>psychology</LM>
+            </reflex>
+          </Entry>
+          <Entry>
+            <morphs>FACiL	bA.sir	بَاصِر	bāṣir</morphs>
+            <entity>
+              <Noun/>
+            </entity>
+            <reflex>Basir</reflex>
+          </Entry>
+          <Entry>
+            <morphs>FACiL	bA.sir	بَاصِر	bāṣir</morphs>
+            <entity>
+              <Adj/>
+            </entity>
+            <reflex>all - seeing ( God )</reflex>
+          </Entry>
+          <Entry>
+            <morphs>FACiL |&lt; aT	bA.siraT	بَاصِرَة	bāṣirat</morphs>
+            <entity>
+              <Noun>
+                <plural>FawACiL	bawA.sir	بَوَاصِر	bawāṣir</plural>
+              </Noun>
+            </entity>
+            <reflex>eye</reflex>
+          </Entry>
+          <Entry>
+            <morphs>MutaFaCCiL	mutaba.s.sir	مُتَبَصِّر	mutabaṣṣir</morphs>
+            <entity>
+              <Adj/>
+            </entity>
+            <reflex>
+              <LM>insightful</LM>
+              <LM>informed</LM>
+            </reflex>
+          </Entry>
+          <Entry>
+            <morphs>FiCAL |&lt; aT	bi.sAraT	بِصَارَة	biṣārat</morphs>
+            <entity>
+              <Noun/>
+            </entity>
+            <reflex>porridge</reflex>
+          </Entry>
+          <Entry>
+            <morphs>FuCAL |&lt; aT	bu.sAraT	بُصَارَة	buṣārat</morphs>
+            <entity>
+              <Noun/>
+            </entity>
+            <reflex>porridge</reflex>
+          </Entry>
+        </ents>
+      </Nest>
+    </Cluster>
+    <Cluster>
+      <Nest>
+        <root>barAzIl	بَرَازِيل	barāzīl</root>
+        <ents>
+          <Entry>
+            <morphs>al >| _____	al-barAzIl	اَلبَرَازِيل	al-barāzīl</morphs>
+            <entity>
+              <Xtra/>
+            </entity>
+            <reflex>Brazil</reflex>
+          </Entry>
+          <Entry>
+            <morphs>_____ |&lt; Iy	barAzIlIy	بَرَازِيلِيّ	barāzīlīy</morphs>
+            <entity>
+              <Adj/>
+            </entity>
+            <reflex>Brazilian</reflex>
+          </Entry>
+          <Entry>
+            <morphs>_____ |&lt; Iy	barAzIlIy	بَرَازِيلِيّ	barāzīlīy</morphs>
+            <entity>
+              <Noun>
+                <plural>_____ |&lt; Iy |&lt; Un	barAzIlIyUn	بَرَازِيلِيُّون	barāzīlīyūn</plural>
+                <femini>_____ |&lt; Iy |&lt; aT	barAzIlIyaT	بَرَازِيلِيَّة	barāzīlīyat</femini>
+              </Noun>
+            </entity>
+            <reflex>Brazilian</reflex>
+          </Entry>
+        </ents>
+      </Nest>
+    </Cluster>
+  </data>
+</ElixirFM>

@@ -193,7 +193,7 @@ class Inventory:
         self.bracketing_strategy = bracketing_strategy
 
     @staticmethod
-    def _merge_trees(
+    def merge_trees(
             tree_l: CONLLUTree,
             tree_r: CONLLUTree,
             deprel: str,
@@ -236,33 +236,33 @@ class Inventory:
         )
         if rule.info == "SFX":
             # derivational suffix
-            tree = self._merge_trees(
+            tree = self.merge_trees(
                 stem_tree, affix_tree, deprel="affix", is_arc_l2r=True
             )
         elif rule.info == "PTFX":
             # postfix, e. g. Russian -ся/-сь
-            tree = self._merge_trees(
+            tree = self.merge_trees(
                 stem_tree, affix_tree, deprel="refl", is_arc_l2r=True
             )
         elif rule.info == "PFX":
             # derivational prefix
-            tree = self._merge_trees(
+            tree = self.merge_trees(
                 affix_tree, stem_tree, deprel="affix", is_arc_l2r=False
             )
         elif rule.info == "CONV":
             # conversion
-            tree = self._merge_trees(
+            tree = self.merge_trees(
                 stem_tree, affix_tree, deprel="conv", is_arc_l2r=True
             )
         elif rule.info == "INTERFIX":
             # inflectional interfix: Russ[-ia] + (o) + phobia
             # TODO: handle inflection
-            tree = self._merge_trees(
+            tree = self.merge_trees(
                 stem_tree, affix_tree, deprel="infl", is_arc_l2r=True
             )
         elif rule.info == "INFL":
             # TODO: handle inflection
-            tree = self._merge_trees(
+            tree = self.merge_trees(
                 stem_tree, affix_tree, deprel="infl", is_arc_l2r=True
             )
         else:
@@ -296,29 +296,29 @@ class Inventory:
         if self.bracketing_strategy == "head":
             # (m1 (m2 (m3 h)))
             for modifier_tree in reversed(modifiers_trees):
-                stem_tree = self._merge_trees(
+                stem_tree = self.merge_trees(
                     modifier_tree, stem_tree, "compound", is_arc_l2r=False
                 )
         elif self.bracketing_strategy == "last":
             # ((m1 (m2 m3)) h)
             modifiers_tree = modifiers_trees[-1]
             for modifier_tree in reversed(modifiers_trees[:-1]):
-                modifiers_tree = self._merge_trees(
+                modifiers_tree = self.merge_trees(
                     modifier_tree, modifiers_tree,
                     "compound", is_arc_l2r=False
                 )
-            stem_tree = self._merge_trees(
+            stem_tree = self.merge_trees(
                 modifiers_tree, stem_tree, "compound", is_arc_l2r=False
             )
         elif self.bracketing_strategy == "chain":
             # (((m1 m2) m3) h)
             modifiers_tree = modifiers_trees[0]
             for modifier_tree in modifiers_trees[1:]:
-                modifiers_tree = self._merge_trees(
+                modifiers_tree = self.merge_trees(
                     modifiers_tree, modifier_tree,
                     "compound", is_arc_l2r=False
                 )
-            stem_tree = self._merge_trees(
+            stem_tree = self.merge_trees(
                 modifiers_tree, stem_tree, "compound", is_arc_l2r=False
             )
         else:
