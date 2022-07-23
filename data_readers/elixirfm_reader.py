@@ -228,18 +228,18 @@ class ElixirFMReader(ReaderAbstract):
 
 # Arabic example
 
-inventory = ElixirFMReader(lang="arb").build_inventory(
-    "../data/arb/elixirfm/sample.xml"
-)
-
-query = LexItem(
-    lang='arb',
-    lemma='بَصَرِيّ',
-    form='بَصَرِيّ',
-    upos='ADJ',
-    xpos='Adj',
-)
-
-inventory.make_subword_tree(
-    query
-).html(f"examples/{query.lang}_{query.lemma}_{query.upos}.html")
+# inventory = ElixirFMReader(lang="arb").build_inventory(
+#     "../data/arb/elixirfm/sample.xml"
+# )
+#
+# query = LexItem(
+#     lang='arb',
+#     lemma='بَصَرِيّ',
+#     form='بَصَرِيّ',
+#     upos='ADJ',
+#     xpos='Adj',
+# )
+#
+# inventory.make_subword_tree(
+#     query
+# ).html(f"examples/{query.lang}_{query.lemma}_{query.upos}.html")
