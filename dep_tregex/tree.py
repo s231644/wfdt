@@ -1,7 +1,17 @@
 class Tree:
     # - Constructor - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    def __init__(self, forms, lemmas, cpostags, postags, feats, heads, deprels):
+    def __init__(
+            self,
+            forms,
+            lemmas,
+            cpostags,
+            postags,
+            feats,
+            heads,
+            deprels,
+            sent_text=None
+    ):
         """
         Construct a tree.
 
@@ -22,6 +32,7 @@ class Tree:
         self._feats = list(feats)
         self._heads = list(heads)
         self._deprels = list(deprels)
+        self.sent_text = sent_text
 
         # Check lengths.
         N = len(self._forms)

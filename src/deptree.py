@@ -152,7 +152,7 @@ class CONLLUTree:
 
     def html(self, fpath: Optional[str] = None) -> str:
         content = self.visualize_tree(
-            "\n".join([str(token) for token in self.tokens])
+            self.__str__()
         )
         if fpath:
             with open(fpath, "w") as f:
@@ -237,17 +237,17 @@ class Inventory:
         if rule.info == "SFX":
             # derivational suffix
             tree = self.merge_trees(
-                stem_tree, affix_tree, deprel="affix", is_arc_l2r=True
+                stem_tree, affix_tree, deprel="deriv", is_arc_l2r=True
             )
         elif rule.info == "PTFX":
             # postfix, e. g. Russian -ся/-сь
             tree = self.merge_trees(
-                stem_tree, affix_tree, deprel="refl", is_arc_l2r=True
+                stem_tree, affix_tree, deprel="expl:pv", is_arc_l2r=True
             )
         elif rule.info == "PFX":
             # derivational prefix
             tree = self.merge_trees(
-                affix_tree, stem_tree, deprel="affix", is_arc_l2r=False
+                affix_tree, stem_tree, deprel="deriv", is_arc_l2r=False
             )
         elif rule.info == "CONV":
             # conversion
@@ -428,7 +428,11 @@ class Inventory:
             united_subword_tokens[idx].set_head(subword_roots[renum_head] + 1)
             united_subword_tokens[idx].deprel = token.deprel
 
-        return CONLLUTree(united_subword_tokens)
+        return CONLLUTree(
+            united_subword_tokens,
+            sent_id=word_tree.sent_id,
+            sent_text=word_tree.sent_text,
+        )
 
 
 def unite_inventories(*inventories: Inventory) -> Inventory:

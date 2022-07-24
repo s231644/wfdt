@@ -197,13 +197,13 @@ class CroDeriVReader(ReaderAbstract):
         for prefix_token in reversed(tokens_by_class["Prefix"]):
             affix_tree = CONLLUTree([prefix_token])
             word_tree = Inventory.merge_trees(
-                affix_tree, word_tree, deprel="affix", is_arc_l2r=False
+                affix_tree, word_tree, deprel="deriv", is_arc_l2r=False
             )
 
         for suffix_token in tokens_by_class["Suffix"]:
             affix_tree = CONLLUTree([suffix_token])
             word_tree = Inventory.merge_trees(
-                word_tree, affix_tree, deprel="affix", is_arc_l2r=True
+                word_tree, affix_tree, deprel="deriv", is_arc_l2r=True
             )
 
         for suffix_token in tokens_by_class["Ending"]:

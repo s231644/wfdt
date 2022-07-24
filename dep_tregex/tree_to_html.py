@@ -394,6 +394,8 @@ def write_tree_html(file, tree, fields=[], highlight_nodes=[], static=False):
             else:
                 texts_right.append(create_subtree_texts(c))
         subtree_texts[i] = " ".join(texts_left + [tree._forms[i - 1] if i > 0 else ""] + texts_right)
+        if tree.sent_text:
+            subtree_texts[0] = tree.sent_text
         return subtree_texts[i]
 
     create_subtree_texts()

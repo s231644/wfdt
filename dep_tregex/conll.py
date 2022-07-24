@@ -35,15 +35,22 @@ def read_trees_conll(text, errors='strict'):
     forms, lemmas, cpostags, postags, feats, heads, deprels = \
         [], [], [], [], [], [], []
 
+    sent_text = None
+
     for line_no, line in enumerate(text.split("\n")):
         if line.startswith("#"):
+            if line.startswith("# text ="):
+                sent_text = line[8:].strip()
             continue
         try:
             # On empty line, yield the tree (if the tree is not empty).
             if not line:
                 if forms:
                     tree = Tree(
-                        forms, lemmas, cpostags, postags, feats, heads, deprels)
+                        forms, lemmas, cpostags, postags, feats, heads, deprels,
+                        sent_text=sent_text
+                    )
+                    sent_text = None
                     yield tree
 
                     node = 1
@@ -101,7 +108,11 @@ def read_trees_conll(text, errors='strict'):
 
     # On end-of-file, don't forget to yield the last tree.
     if forms:
-        yield Tree(forms, lemmas, cpostags, postags, feats, heads, deprels)
+        tree = Tree(
+            forms, lemmas, cpostags, postags, feats, heads, deprels,
+            sent_text=sent_text
+        )
+        yield tree
 
 
 def write_tree_conll(file, tree):

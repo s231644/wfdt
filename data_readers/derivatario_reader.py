@@ -79,12 +79,12 @@ class DerivaTarioReader(ReaderAbstract):
             affix_tree = CONLLUTree([affix_token])
             if morpheme in self.prefixes:
                 word_tree = Inventory.merge_trees(
-                    affix_tree, word_tree, deprel="affix", is_arc_l2r=False
+                    affix_tree, word_tree, deprel="deriv", is_arc_l2r=False
                 )
             else:
                 # suffix, conversion, backformation, shortening
                 word_tree = Inventory.merge_trees(
-                    word_tree, affix_tree, deprel="affix", is_arc_l2r=True
+                    word_tree, affix_tree, deprel="deriv", is_arc_l2r=True
                 )
 
         return [(word, word_tree)]

@@ -177,7 +177,7 @@ class ElixirFMReader(ReaderAbstract):
             )
             transfix_tree = CONLLUTree([transfix_token])
             word_tree = Inventory.merge_trees(
-                root_tree, transfix_tree, deprel="affix", is_arc_l2r=True
+                root_tree, transfix_tree, deprel="deriv", is_arc_l2r=True
             )
 
         for dep in reversed(ldeps):
@@ -210,7 +210,7 @@ class ElixirFMReader(ReaderAbstract):
             )
             affix_tree = CONLLUTree([affix_token])
             word_tree = Inventory.merge_trees(
-                affix_tree, word_tree, deprel="affix", is_arc_l2r=False
+                affix_tree, word_tree, deprel="deriv", is_arc_l2r=False
             )
 
         for affix in suffixes:
@@ -221,7 +221,7 @@ class ElixirFMReader(ReaderAbstract):
             )
             affix_tree = CONLLUTree([affix_token])
             word_tree = Inventory.merge_trees(
-                word_tree, affix_tree, deprel="affix", is_arc_l2r=True
+                word_tree, affix_tree, deprel="deriv", is_arc_l2r=True
             )
         return word_tree
 
