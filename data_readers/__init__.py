@@ -4,6 +4,7 @@ from .abstract_readers import (
 )
 from .aucopro_reader import AuCoProReader
 from .char_deps_reader import CharDepsReader
+from .croderiv_reader import CroDeriVReader
 from .demonext_reader import DemonextReader
 from .derivatario_reader import DerivaTarioReader
 from .elixirfm_reader import ElixirFMReader
@@ -23,6 +24,7 @@ __all__ = [
     "AnalysesReaderAbstract",
     "AuCoProReader",
     "CharDepsReader",
+    "CroDeriVReader",
     "DemonextReader",
     "DerivaTarioReader",
     "ElixirFMReader",

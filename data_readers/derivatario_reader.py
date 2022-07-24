@@ -20,7 +20,7 @@ class DerivaTarioReader(ReaderAbstract):
         "acons", "anti", "auto", "bi", "tri", "de", "1de", "2de", "dis", "in",
         "micro", "mini", "ri", "1s", "2s", "co", "neo", "1in", "2in", "a",
         "con", "per", "pre", "inter", "intra", "iper", "mega", "mono", "maxi",
-        "multi","pan", "cis", "para", "pro", "tras", "es", "ex", "e", "proto",
+        "multi", "pan", "cis", "para", "pro", "tras", "es", "ex", "e", "proto",
         "stra", "trans", "fra"
     }
 
